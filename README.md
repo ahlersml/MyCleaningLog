@@ -4,6 +4,7 @@ ______________________________
 ### **Design Document**
 
 Michael Ahlers
+Jeffrey Wallace
 
 ______________________________
 
@@ -94,7 +95,7 @@ ______________________________
 
 **DevOps/Product Owner/Scrum Master** Michael Ahlers
 
-**Frontend Developer**
+**Frontend Developer** Jeffrey Wallace
 
 **Integration Developer**
 		
