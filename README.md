@@ -4,6 +4,7 @@ ______________________________
 ### **Design Document**
 
 Michael Ahlers
+November Harris
 Jeffrey Wallace
 
 ______________________________
@@ -97,7 +98,7 @@ ______________________________
 
 **Frontend Developer** Jeffrey Wallace
 
-**Integration Developer**
+**Integration Developer** November Harris
 		
 		
 
