@@ -6,6 +6,7 @@ ______________________________
 Michael Ahlers
 November Harris
 Jeffrey Wallace
+Yanling Zentgraf
 
 ______________________________
 
@@ -99,6 +100,8 @@ ______________________________
 **Frontend Developer** Jeffrey Wallace
 
 **Integration Developer** November Harris
+
+**Quality Control / Testing** Yanling Zentgraf
 		
 		
 
