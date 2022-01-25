@@ -4,8 +4,11 @@ ______________________________
 ### **Design Document**
 
 Michael Ahlers
+
 November Harris
+
 Jeffrey Wallace
+
 Yanling Zentgraf
 
 ______________________________
