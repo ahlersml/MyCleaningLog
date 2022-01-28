@@ -34,11 +34,11 @@ As a user who needs to clean regularly, I want to have a way to remind me when I
 
 Phones Internal Clock
 
-List of Rooms and cleaning items contained.
+List of Rooms and cleaning items contained
 
 **ASSUMPTIONS**
 
-Common cleaning items for each room
+Common cleaning tasks for each room
 
 ###### **EXAMPLES**
 
@@ -62,16 +62,15 @@ Clean Baseboards
 
 **Given** The list of rooms and items contained is available
 
-**When** I search for “Mikes Toy Shop"
+**When** I search for “Mike's Toy Shop"
 
-**Then** I should recieve a notification of "Zero prebuilt rooms found. Would you Like to create anyway? Y/N"
-
+**Then** I should recieve a notification of "No prebuilt rooms found. Would you like to create one? Y/N"
 
 
 
 **2.1**
 
-**Given** The application is synched to the phones internal clock
+**Given** The application is synced to the phone's internal clock
 
 **When** I select a task to view that has not gone past due
 
@@ -80,12 +79,30 @@ Clean Baseboards
 
 **2.2**
 
-**Given** The application is synched to the phones internal clock
+**Given** The application is synced to the phone's internal clock
 
 **When** I select a task to view that has gone past due
 
 **Then** I should see a red timer counting up from the time since it was supposed to be completed
 
+
+
+**3.1**
+
+**Given** A task has never been used
+
+**When** I select it
+
+**Then** I should be prompted to set the time between completing the task and the next time it needs to be done (cooldown)
+
+
+**3.2**
+
+**Given** A task has never been used
+
+**When** I select it and choose not to set a cooldown time
+
+**Then** The cooldown time should be set to a default value
 
 ______________________________
 
