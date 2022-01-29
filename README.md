@@ -134,4 +134,14 @@ ______________________________
 		
 		
 
+______________________________
 
+### **MEETING STRUCTURE**
+
+**Meeting Location** Teams Channel
+
+**Meeting Day** Every Tuesday
+
+**Meeting Time** 11:00 AM
+
+**Additional Communication** Questions and comments regarding the project will be posted in the Teams text channel.
