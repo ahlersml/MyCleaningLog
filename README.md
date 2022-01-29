@@ -11,10 +11,13 @@ Jeffrey Wallace
 
 Yanling Zentgraf
 
+Corin Manning
+
 ______________________________
 
 ### **Introduction**
 
+Ever forget when the last time you cleaned something was? Our Cleaning Log will help you set reminders by room or area and keep track of when you clean. You add or remove rooms to the list and chores to each room. There are also options applicable to your whole house. Each item has it's own reminder that you can set to repeat however often you like. You can check off each task individually or by room as a whole. Additionally, if you check off vacuuming under the whole house option, it will check that off for each room. This will be a great app to add to your rotation to keep up on all your frequent and less frequent chores.
 
 ______________________________
 ### **Storyboard**
@@ -117,7 +120,7 @@ ______________________________
 
 **DevOps/Product Owner/Scrum Master** Michael Ahlers
 
-**Frontend Developer** Jeffrey Wallace
+**Frontend Developer** Jeffrey Wallace, Corin Manning
 
 **Integration Developer** November Harris
 
