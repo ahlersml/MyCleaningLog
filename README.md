@@ -108,7 +108,7 @@ ______________________________
 
 ### **CLASS DIAGRAM**
 
-
+![diagram](/UML/CleanList.drawio.png)
 ______________________________
 
 ### **SIGNOFF**
