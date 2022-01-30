@@ -117,10 +117,14 @@ ______________________________
 
 ### **CLASS DIAGRAM DESCRIPTION**
 
-Class: MyRoom, Task. They are parent and child relationship.
-Class: MyRoomService will use IMyroomDAO
-Class: TaskService will use ITaskDAO
-Class: TaskDatabase will extends to RoomDatabase
+**Class:** MyRoom, Task. They are parent and child relationship.  
+
+**Class:** MyRoomService will use IMyroomDAO    
+
+**Class:** TaskService will use ITaskDAO  
+
+**Class:** TaskDatabase will extends to RoomDatabase
+
 ______________________________
 
 ### **SIGNOFF**
