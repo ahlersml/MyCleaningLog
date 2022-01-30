@@ -117,17 +117,17 @@ ______________________________
 
 ### **CLASS DIAGRAM DESCRIPTION**
 
-MainActivity: The first screen the user sees. This will have room list, and an option to enter a new room.
+MainActivity: The first screen the user sees. This will have room list, and an option to enter a new room.  
 
-RetrofitInstance: ?
+RetrofitInstance: ?  
 
-MyRoom: Noun class that represents a room.
+MyRoom: Noun class that represents a room.  
 
-Task: Noun class that represents a cleaning task.
+Task: Noun class that represents a cleaning task.  
 
-IMyRoomDAO: Interface for ?
+IMyRoomDAO: Interface for ?  
 
-ITaskDAO: Interface for ?
+ITaskDAO: Interface for ?  
 
 ______________________________
 
