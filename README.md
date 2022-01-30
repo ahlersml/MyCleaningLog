@@ -117,13 +117,17 @@ ______________________________
 
 ### **CLASS DIAGRAM DESCRIPTION**
 
-**Class:** MyRoom, Task. They are parent and child relationship.  
+MainActivity: The first screen the user sees. This will have room list, and an option to enter a new room.
 
-**Class:** MyRoomService will use IMyroomDAO    
+RetrofitInstance: ?
 
-**Class:** TaskService will use ITaskDAO  
+MyRoom: Noun class that represents a room.
 
-**Class:** TaskDatabase will extends to RoomDatabase
+Task: Noun class that represents a cleaning task.
+
+IMyRoomDAO: Interface for ?
+
+ITaskDAO: Interface for ?
 
 ______________________________
 
