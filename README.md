@@ -24,7 +24,6 @@ ______________________________
 
 [MyCleaningLog Storyboard](https://projects.invisionapp.com/prototype/ckyiy7qe9004yss01a4emsp35/play)
 
-![Storyboard](/UML/cleaning-story-board-compare.jpg)
 ______________________________
 ### **Functional Requirements**
 
