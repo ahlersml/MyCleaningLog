@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +13,14 @@ import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material.*
 import androidx.compose.material.ContentAlpha.medium
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,11 +56,13 @@ fun ExpandableCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(color = Color.LightGray)
                 .padding(12.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier
+                        .background(color = Color.LightGray)
                         .weight(6f),
                     text = title,
                     fontSize = titleFontSize,
@@ -65,24 +70,65 @@ fun ExpandableCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                IconButton(
-                    modifier = Modifier
-                        .alpha(ContentAlpha.medium)
-                        .weight(1f)
-                        .rotate(rotationState),
-                    onClick = {
-                        expandedState = !expandedState
-                    }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Drop-Down Arrow"
-                    )
+                if(title == "Rooms"){
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                            .background(color = Color.Green)
+                            .weight(1f),
+                        onClick = {
+                            //expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add Symbol"
+                        )
+                    }
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                            .weight(1f)
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop-Down Arrow"
+                        )
+                    }
+
                 }
+                else{
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                            .weight(1f)
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop-Down Arrow"
+                        )
+                    }
+                }
+
             }
             if(expandedState){
-                Text(
-                    text = "hello"
-                )
+                if (title == "Rooms"){
+                    ExpandableCardLevelTwo(title = "Bedroom1")
+                }
+                if (title == "Common Tasks"){
+                    //Replace the following with a common tasks list
+                    Text(text = "Here are the common tasks")
+                }
+                if (title == "Upcoming Tasks"){
+                    //Replace the following with upcoming tasks list
+                    Text(text = "here are the upcoming tasks")
+                }
+
             }
         }
 
