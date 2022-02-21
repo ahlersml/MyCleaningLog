@@ -42,7 +42,7 @@ fun ExpandableCard(
         //Used for Add Room Button
         var addRoomShowMenu by remember { mutableStateOf(false)}
         val context = LocalContext.current
-        var addRoomList: MutableList<Any> = mutableListOf()
+        var addRoomList = remember { mutableStateListOf<RoomClass>()}
 
 
         //building the card
@@ -99,7 +99,8 @@ fun ExpandableCard(
                             //bedroom
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Bedroom")
+                                    addRoomList.add(RoomClass("Bedroom", "Bedroom"))
+                                    //addRoomList.add("Bedroom")
                                     addRoomShowMenu = !addRoomShowMenu
                             })
                                 { Text(text = "Bedroom") }
@@ -107,7 +108,7 @@ fun ExpandableCard(
                             //bathroom
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Bathroom")
+                                    //addRoomList.add("Bathroom")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Bathroom") }
@@ -115,7 +116,7 @@ fun ExpandableCard(
                             //kitchen
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Kitchen")
+                                    //addRoomList.add("Kitchen")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Kitchen") }
@@ -123,7 +124,7 @@ fun ExpandableCard(
                             //Dining room
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Dining Room")
+                                    //addRoomList.add("Dining Room")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Dining Room") }
@@ -131,7 +132,7 @@ fun ExpandableCard(
                             //living room
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Living Room")
+                                    //addRoomList.add("Living Room")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Living Room") }
@@ -139,7 +140,7 @@ fun ExpandableCard(
                             //outdoors
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Outdoors")
+                                    //addRoomList.add("Outdoors")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Outdoors") }
@@ -147,7 +148,7 @@ fun ExpandableCard(
                             //garage
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Garage")
+                                    //addRoomList.add("Garage")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Garage") }
@@ -155,7 +156,7 @@ fun ExpandableCard(
                             //utility room
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add("Utility Room")
+                                    //addRoomList.add("Utility Room")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
                             { Text(text = "Utility Room") }
@@ -211,8 +212,10 @@ fun ExpandableCard(
 
                         //passes each item on the addRoomList into expandable card level
 
-                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)} }
-
+                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
+                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
+                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.name)}
+                    }
 
                     //what to do if the 1st level expandable card is labeled "Common Tasks"
                     if (title == "Common Tasks"){
