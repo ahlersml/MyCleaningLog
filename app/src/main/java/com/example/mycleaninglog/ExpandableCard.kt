@@ -106,8 +106,7 @@ fun ExpandableCard(
                                 { Text(text = "Bedroom") }
 
                             //bathroom
-                            DropdownMenuItem(
-                                onClick = {
+                            DropdownMenuItem(onClick = {
                                     //addRoomList.add("Bathroom")
                                     addRoomShowMenu = !addRoomShowMenu
                                 })
