@@ -5,6 +5,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +26,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.mycleaninglog.ui.theme.Gray
+import com.example.mycleaninglog.ui.theme.RegularBlue
 
 @ExperimentalMaterialApi
 @Composable
@@ -46,6 +49,8 @@ fun ExpandableCard(
 
 
         //building the card
+        val dark = isSystemInDarkTheme()
+        val color = if (dark) Gray else Color.LightGray
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,7 +65,7 @@ fun ExpandableCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color.LightGray)
+                    .background(color = color)
                     .padding(12.dp)
             ) {
                 //following code builds the row that the information will sit within
@@ -68,7 +73,7 @@ fun ExpandableCard(
                     //following code builds the first block of the row (this is the text/title section)
                     Text(
                         modifier = Modifier
-                            .background(color = Color.LightGray)
+                            .background(color = color)
                             .weight(6f),
                         text = title,
                         fontSize = titleFontSize,
