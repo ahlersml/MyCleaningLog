@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -44,7 +45,6 @@ fun ExpandableCard(
         val context = LocalContext.current
         var addRoomList = remember { mutableStateListOf<RoomClass>()}
 
-
         //building the card
         Card(
             modifier = Modifier
@@ -63,9 +63,11 @@ fun ExpandableCard(
                     .background(color = Color.LightGray)
                     .padding(12.dp)
             ) {
-                //following code builds the row that the information will sit within
+                // following code builds the row that the information will sit within
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    //following code builds the first block of the row (this is the text/title section)
+                    /* following code builds the first block of the row
+                     * (this is the text/title section)
+                     */
                     Text(
                         modifier = Modifier
                             .background(color = Color.LightGray)
@@ -76,7 +78,8 @@ fun ExpandableCard(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    // If the level 1 card is titled "Rooms", do the following code which builds the second and third portion of the row (the buttons)
+                    /* If the level 1 card is titled "Rooms", do the following code which
+                    *  builds the second and third portion of the row (the buttons) */
                     if(title == "Rooms"){
                         //creates the icon button for adding rooms
                         IconButton(
@@ -91,6 +94,7 @@ fun ExpandableCard(
                                 contentDescription = "Add Symbol"
                             )
                         }
+
                         //creates the dropdown menu when icon is clicked
                         DropdownMenu(
                             expanded = addRoomShowMenu,
@@ -102,14 +106,14 @@ fun ExpandableCard(
                                     addRoomList.add(RoomClass("Bedroom", "Bedroom"))
                                     //addRoomList.add("Bedroom")
                                     addRoomShowMenu = !addRoomShowMenu
-                            })
-                                { Text(text = "Bedroom") }
+                                })
+                            { Text(text = "Bedroom") }
 
                             //bathroom
                             DropdownMenuItem(onClick = {
-                                    //addRoomList.add("Bathroom")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
+                                //addRoomList.add("Bathroom")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
                             { Text(text = "Bathroom") }
 
                             //kitchen
@@ -170,7 +174,8 @@ fun ExpandableCard(
                             { Text(text = "other") }
 
                         }
-                        //creates the up and down arrow icon for if 1st level card has been expanded
+
+                        // creates the up and down arrow icon for if 1st level card has been expanded
                         IconButton(
                             modifier = Modifier
                                 .alpha(ContentAlpha.medium)
@@ -185,7 +190,8 @@ fun ExpandableCard(
                             )
                         }
                     }
-                    //if the level 1 card is not titled "Rooms", do the following code which builds the second and third secions of the row (the buttons)
+                    /* if the level 1 card is not titled "Rooms", do the following code which
+                    *  builds the second and third sections of the row (the buttons) */
                     else{
                         //creates the up and down arrow icon for if 1st level card has been expanded
                         IconButton(
@@ -204,37 +210,47 @@ fun ExpandableCard(
                     }
 
                 }
-                //displays the options for if the card is expanded
-                if(expandedState){
-                    //what to do if the 1st level expandable card is labeled "Rooms"
-                    if (title == "Rooms"){
-
-                        //passes each item on the addRoomList into expandable card level
-
-                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
-                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
-                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.name)}
-                    }
-
-                    //what to do if the 1st level expandable card is labeled "Common Tasks"
-                    if (title == "Common Tasks"){
-                        //currently just displays a text line
-                        //following code needs to be replaced with a list of tasks that are shared between multiple rooms
-                        Text(text = "Here are the common tasks")
-                    }
-                    //what to do if the 1st level expandable card is labeled "Upcoming tasks"
-                    if (title == "Upcoming Tasks"){
-                        //currently just displays a text line
-                        //following code needs to be replaced with a list of tasks in order from most needed to least
-                        Text(text = "here are the upcoming tasks")
-                    }
-
-                }
+                //
+                IsCardExpanded( expandedState, addRoomList, title )
             }
 
         }
     }
 
+
+@ExperimentalMaterialApi
+@Composable
+// Determines if the card is expanded
+fun IsCardExpanded(expandedState: Boolean, addRoomList: SnapshotStateList<RoomClass>, title: String) {
+    // True?
+    if ( expandedState ){
+        // Do this if the title is 'Rooms'
+        if (title == "Rooms"){
+
+            // passes each item on the addRoomList into expandable card level
+
+            //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
+            //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
+            addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.name)}
+        }
+
+        // Do this if the title is 'Common Tasks'
+        if ( title == "Common Tasks" ){
+            /* following code needs to be replaced with a list of tasks that are
+            *  shared between multiple rooms
+            */
+            Text(text = "Here are the common tasks")
+        }
+        // Do this if the title is 'UpcomingTasks'
+        if ( title == "Upcoming Tasks" ){
+            /* following code needs to be replaced with a list of tasks in order
+             * from most needed to least
+             */
+            Text(text = "here are the upcoming tasks")
+        }
+
+    }
+}
 
 @ExperimentalMaterialApi
 @Composable
