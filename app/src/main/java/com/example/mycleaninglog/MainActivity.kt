@@ -27,11 +27,7 @@ class MainActivity : ComponentActivity() {
                             .background(MaterialTheme.colors.background)
                             .padding(24.dp)
                     ) {
-                        //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
-                            ExpandableCard(title = "Rooms")
-                            ExpandableCard(title = "Common Tasks")
-                            ExpandableCard(title = "Upcoming Tasks")
-
+                        HomeScreen()
                     }
                 }
             }
@@ -42,6 +38,7 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen() {
+    // calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
     ExpandableCard(title = "Rooms")
     ExpandableCard(title = "Common Tasks")
     ExpandableCard(title = "Upcoming Tasks")
