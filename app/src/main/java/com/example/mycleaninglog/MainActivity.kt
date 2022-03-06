@@ -28,23 +28,13 @@ class MainActivity : ComponentActivity() {
                             .padding(24.dp)
                     ) {
                         //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
-                            ExpandableCard(title = "Rooms")
-                            ExpandableCard(title = "Common Tasks")
-                            ExpandableCard(title = "Upcoming Tasks")
+                            DefaultPreview()
 
                     }
                 }
             }
         }
     }
-}
-
-@ExperimentalMaterialApi
-@Composable
-fun HomeScreen() {
-    ExpandableCard(title = "Rooms")
-    ExpandableCard(title = "Common Tasks")
-    ExpandableCard(title = "Upcoming Tasks")
 }
 
 @ExperimentalMaterialApi

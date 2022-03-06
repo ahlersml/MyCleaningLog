@@ -26,8 +26,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.mycleaninglog.dto.Room
 import com.example.mycleaninglog.ui.theme.Gray
-import com.example.mycleaninglog.ui.theme.RegularBlue
+
 
 @ExperimentalMaterialApi
 @Composable
@@ -45,7 +46,7 @@ fun ExpandableCard(
         //Used for Add Room Button
         var addRoomShowMenu by remember { mutableStateOf(false)}
         val context = LocalContext.current
-        var addRoomList = remember { mutableStateListOf<RoomClass>()}
+        var addRoomList = remember { mutableStateListOf<Room>()}
 
 
         //building the card
@@ -104,7 +105,7 @@ fun ExpandableCard(
                             //bedroom
                             DropdownMenuItem(
                                 onClick = {
-                                    addRoomList.add(RoomClass("Bedroom", "Bedroom"))
+                                    addRoomList.add(Room("Bedroom", "Bedroom"))
                                     //addRoomList.add("Bedroom")
                                     addRoomShowMenu = !addRoomShowMenu
                             })
@@ -191,7 +192,7 @@ fun ExpandableCard(
                             )
                         }
                     }
-                    //if the level 1 card is not titled "Rooms", do the following code which builds the second and third secions of the row (the buttons)
+                    //if the level 1 card is not titled "Rooms", do the following code which builds the second and third sections of the row (the buttons)
                     else{
                         //creates the up and down arrow icon for if 1st level card has been expanded
                         IconButton(
@@ -219,7 +220,7 @@ fun ExpandableCard(
 
                         //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
                         //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
-                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.name)}
+                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.roomName)}
                     }
 
                     //what to do if the 1st level expandable card is labeled "Common Tasks"
