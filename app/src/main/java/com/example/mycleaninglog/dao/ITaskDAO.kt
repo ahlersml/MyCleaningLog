@@ -1,6 +1,6 @@
 package com.example.mycleaninglog.dao
 
-import com.example.mycleaninglog.dto.cleaningTask
+import com.example.mycleaninglog.dto.Task
 
 interface ITaskDAO {
 
