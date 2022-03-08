@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
 import com.example.mycleaninglog.ui.theme.RegularBlue
 
@@ -35,6 +36,7 @@ fun ExpandableCard(
     title: String,
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
+    myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom()
     )
     {
         //Used for Expandable card level 1 functionality
@@ -46,7 +48,7 @@ fun ExpandableCard(
         var addRoomShowMenu by remember { mutableStateOf(false)}
         val context = LocalContext.current
         var addRoomList = remember { mutableStateListOf<RoomClass>()}
-
+        var selectedMyRoom: myRoom? = null
 
         //building the card
         val dark = isSystemInDarkTheme()
@@ -101,79 +103,16 @@ fun ExpandableCard(
                             expanded = addRoomShowMenu,
                             onDismissRequest = { addRoomShowMenu = false }) {
                             //list of menu items to be displayed
-                            //bedroom
-                            DropdownMenuItem(
-                                onClick = {
-                                    addRoomList.add(RoomClass("Bedroom", "Bedroom"))
-                                    //addRoomList.add("Bedroom")
-                                    addRoomShowMenu = !addRoomShowMenu
-                            })
-                                { Text(text = "Bedroom") }
+                            //This is dynamic list data from firebase firestore
+                            myRooms.forEach{
+                                    myRoom ->  DropdownMenuItem(onClick = {
+                                addRoomShowMenu = false
+                                selectedMyRoom = myRoom
 
-                            //bathroom
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Bathroom")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Bathroom") }
-
-                            //kitchen
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Kitchen")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Kitchen") }
-
-                            //Dining room
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Dining Room")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Dining Room") }
-
-                            //living room
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Living Room")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Living Room") }
-
-                            //outdoors
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Outdoors")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Outdoors") }
-
-                            //garage
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Garage")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Garage") }
-
-                            //utility room
-                            DropdownMenuItem(
-                                onClick = {
-                                    //addRoomList.add("Utility Room")
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "Utility Room") }
-
-                            //other
-                            DropdownMenuItem(
-                                onClick = {
-
-                                    //add code here to create a new room that is not in the list
-                                    addRoomShowMenu = !addRoomShowMenu
-                                })
-                            { Text(text = "other") }
+                            }) {
+                                Text(text = myRoom.toString())
+                            }
+                            }
 
                         }
                         //creates the up and down arrow icon for if 1st level card has been expanded
