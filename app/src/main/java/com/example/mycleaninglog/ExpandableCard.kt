@@ -37,148 +37,211 @@ fun ExpandableCard(
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
     myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom()
+    ) {
+    //Used for Expandable card level 1 functionality
+    var expandedState by remember { mutableStateOf(false) }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
     )
-    {
-        //Used for Expandable card level 1 functionality
-        var expandedState by remember { mutableStateOf(false) }
-        val rotationState by animateFloatAsState(
-            targetValue = if(expandedState) 180f else 0f)
 
-        //Used for Add Room Button
-        var addRoomShowMenu by remember { mutableStateOf(false)}
-        val context = LocalContext.current
-        var addRoomList = remember { mutableStateListOf<RoomClass>()}
-        var selectedMyRoom: myRoom? = null
+    //Used for Add Room Button
+    var addRoomShowMenu by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    var addRoomList = remember { mutableStateListOf<RoomClass>() }
+    var selectedMyRoom: myRoom? = null
 
-        //building the card
-        val dark = isSystemInDarkTheme()
-        val color = if (dark) Gray else Color.LightGray
-        Card(
+
+    //building the card
+    val dark = isSystemInDarkTheme()
+    val color = if (dark) Gray else Color.LightGray
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            ),
+        onClick = { expandedState = !expandedState }
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearOutSlowInEasing
-                    )
-                ),
-            onClick = { expandedState = !expandedState }
+                .background(color = color)
+                .padding(12.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = color)
-                    .padding(12.dp)
-            ) {
-                //following code builds the row that the information will sit within
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    //following code builds the first block of the row (this is the text/title section)
-                    Text(
+            //following code builds the row that the information will sit within
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                //following code builds the first block of the row (this is the text/title section)
+                Text(
+                    modifier = Modifier
+                        .background(color = color)
+                        .weight(6f),
+                    text = title,
+                    fontSize = titleFontSize,
+                    fontWeight = titleFontWeight,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                // If the level 1 card is titled "Rooms", do the following code which builds the second and third portion of the row (the buttons)
+                if (title == "Rooms") {
+                    //creates the icon button for adding rooms
+                    IconButton(
                         modifier = Modifier
-                            .background(color = color)
-                            .weight(6f),
-                        text = title,
-                        fontSize = titleFontSize,
-                        fontWeight = titleFontWeight,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    // If the level 1 card is titled "Rooms", do the following code which builds the second and third portion of the row (the buttons)
-                    if(title == "Rooms"){
-                        //creates the icon button for adding rooms
-                        IconButton(
-                            modifier = Modifier
-                                .alpha(ContentAlpha.medium)
-                                .background(color = Color.Green)
-                                .weight(1f),
-                            onClick = { addRoomShowMenu = !addRoomShowMenu }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Add Symbol"
-                            )
-                        }
-                        //creates the dropdown menu when icon is clicked
-                        DropdownMenu(
-                            expanded = addRoomShowMenu,
-                            onDismissRequest = { addRoomShowMenu = false }) {
-                            //list of menu items to be displayed
-                            //This is dynamic list data from firebase firestore
-                            myRooms.forEach{
-                                    myRoom ->  DropdownMenuItem(onClick = {
-                                addRoomShowMenu = false
-                                selectedMyRoom = myRoom
-
-                            }) {
-                                Text(text = myRoom.toString())
-                            }
-                            }
-
-                        }
-                        //creates the up and down arrow icon for if 1st level card has been expanded
-                        IconButton(
-                            modifier = Modifier
-                                .alpha(ContentAlpha.medium)
-                                .weight(1f)
-                                .rotate(rotationState),
+                            .alpha(ContentAlpha.medium)
+                            .background(color = Color.Green)
+                            .weight(1f),
+                        onClick = { addRoomShowMenu = !addRoomShowMenu }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add Symbol"
+                        )
+                    }
+                    //creates the dropdown menu when icon is clicked
+                    DropdownMenu(
+                        expanded = addRoomShowMenu,
+                        onDismissRequest = { addRoomShowMenu = false }) {
+                        //list of menu items to be displayed
+                        //bedroom
+                        DropdownMenuItem(
                             onClick = {
-                                expandedState = !expandedState
-                            }) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
-                                contentDescription = "Drop-Down Arrow"
-                            )
-                        }
-                    }
-                    //if the level 1 card is not titled "Rooms", do the following code which builds the second and third secions of the row (the buttons)
-                    else{
-                        //creates the up and down arrow icon for if 1st level card has been expanded
-                        IconButton(
-                            modifier = Modifier
-                                .alpha(ContentAlpha.medium)
-                                .weight(1f)
-                                .rotate(rotationState),
+
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Bedroom") }
+
+                        //bathroom
+                        DropdownMenuItem(
                             onClick = {
-                                expandedState = !expandedState
-                            }) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
-                                contentDescription = "Drop-Down Arrow"
-                            )
-                        }
+                                //addRoomList.add("Bathroom")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Bathroom") }
+
+                        //kitchen
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Kitchen")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Kitchen") }
+
+                        //Dining room
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Dining Room")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Dining Room") }
+
+                        //living room
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Living Room")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Living Room") }
+
+                        //outdoors
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Outdoors")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Outdoors") }
+
+                        //garage
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Garage")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Garage") }
+
+                        //utility room
+                        DropdownMenuItem(
+                            onClick = {
+                                //addRoomList.add("Utility Room")
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "Utility Room") }
+
+                        //other
+                        DropdownMenuItem(
+                            onClick = {
+
+                                //add code here to create a new room that is not in the list
+                                addRoomShowMenu = !addRoomShowMenu
+                            })
+                        { Text(text = "other") }
                     }
 
+
+                    //creates the up and down arrow icon for if 1st level card has been expanded
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                            .weight(1f)
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop-Down Arrow"
+                        )
+                    }
                 }
-                //displays the options for if the card is expanded
-                if(expandedState){
-                    //what to do if the 1st level expandable card is labeled "Rooms"
-                    if (title == "Rooms"){
-
-                        //passes each item on the addRoomList into expandable card level
-
-                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
-                        //addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position as String)}
-                        addRoomList.forEach{position -> ExpandableCardLevelTwo(title = position.name)}
+                //if the level 1 card is not titled "Rooms", do the following code which builds the second and third secions of the row (the buttons)
+                else {
+                    //creates the up and down arrow icon for if 1st level card has been expanded
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                            .weight(1f)
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop-Down Arrow"
+                        )
                     }
-
-                    //what to do if the 1st level expandable card is labeled "Common Tasks"
-                    if (title == "Common Tasks"){
-                        //currently just displays a text line
-                        //following code needs to be replaced with a list of tasks that are shared between multiple rooms
-                        Text(text = "Here are the common tasks")
-                    }
-                    //what to do if the 1st level expandable card is labeled "Upcoming tasks"
-                    if (title == "Upcoming Tasks"){
-                        //currently just displays a text line
-                        //following code needs to be replaced with a list of tasks in order from most needed to least
-                        Text(text = "here are the upcoming tasks")
-                    }
-
                 }
+
             }
+            //displays the options for if the card is expanded
+            if (expandedState) {
+                //what to do if the 1st level expandable card is labeled "Rooms"
+                if (title == "Rooms") {
 
+                    //passes each item on the addRoomList into expandable card level
+
+
+                    addRoomList.forEach { position -> ExpandableCardLevelTwo(title = position.name) }
+                }
+
+                //what to do if the 1st level expandable card is labeled "Common Tasks"
+                if (title == "Common Tasks") {
+                    //currently just displays a text line
+                    //following code needs to be replaced with a list of tasks that are shared between multiple rooms
+                    Text(text = "Here are the common tasks")
+                }
+                //what to do if the 1st level expandable card is labeled "Upcoming tasks"
+                if (title == "Upcoming Tasks") {
+                    //currently just displays a text line
+                    //following code needs to be replaced with a list of tasks in order from most needed to least
+                    Text(text = "here are the upcoming tasks")
+                }
+
+            }
         }
+
     }
+}
 
 
 @ExperimentalMaterialApi
