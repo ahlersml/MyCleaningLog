@@ -112,15 +112,7 @@ fun ExpandableCard(
                         //bedroom
                         DropdownMenuItem(
                             onClick = {
-                                var preConRoom = myRoom().apply{
-                                    myRoomName = "Bedroom"
-                                    myRoomID = "Bed"
-                                }
-
-                                //if (MainActivity::viewModel.isInitialized){
-                                    //viewModel.save(preConRoom)
-                                //}
-                                viewModel.save(preConRoom)
+                                saveItem("Bedroom", "Bed", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Bedroom") }
@@ -137,6 +129,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Kitchen")
+                                saveItem("Kitchen", "Kit", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Kitchen") }
@@ -145,6 +138,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Dining Room")
+                                saveItem("Dining Room", "Din", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Dining Room") }
@@ -153,6 +147,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Living Room")
+                                saveItem("Living Room", "Liv", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Living Room") }
@@ -161,6 +156,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Outdoors")
+                                saveItem("Outdoors", "Out", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Outdoors") }
@@ -169,6 +165,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Garage")
+                                saveItem("Garage", "Gar", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Garage") }
@@ -177,6 +174,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Utility Room")
+                                saveItem("Utility Room", "Util", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Utility Room") }
