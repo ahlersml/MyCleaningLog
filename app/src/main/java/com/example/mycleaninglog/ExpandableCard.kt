@@ -26,18 +26,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
-import com.example.mycleaninglog.ui.theme.RegularBlue
+
 
 @ExperimentalMaterialApi
 @Composable
+
 fun ExpandableCard(
+
     title: String,
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
-    myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom()
+    myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom(),
+    inViewModel: MainViewModel
     ) {
     //Used for Expandable card level 1 functionality
     var expandedState by remember { mutableStateOf(false) }
@@ -51,7 +53,7 @@ fun ExpandableCard(
     //var addRoomList = remember { mutableStateListOf<RoomClass>() }
     var selectedMyRoom: myRoom? = null
 
-    lateinit var viewModel: MainViewModel
+    var viewModel = inViewModel
 
 
     //building the card
@@ -112,8 +114,12 @@ fun ExpandableCard(
                             onClick = {
                                 var preConRoom = myRoom().apply{
                                     myRoomName = "Bedroom"
-                                    myRoomID = "bed"
+                                    myRoomID = "Bed"
                                 }
+
+                                //if (MainActivity::viewModel.isInitialized){
+                                    //viewModel.save(preConRoom)
+                                //}
                                 viewModel.save(preConRoom)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
@@ -122,7 +128,6 @@ fun ExpandableCard(
                         //bathroom
                         DropdownMenuItem(
                             onClick = {
-                                //addRoomList.add("Bathroom")
                                 saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
@@ -262,6 +267,6 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
 @Composable
 @Preview
 fun ExpandableCardPreview(){
-    ExpandableCard("Rooms")
+    //ExpandableCard("Rooms")
 }
 

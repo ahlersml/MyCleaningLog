@@ -17,13 +17,16 @@ import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
+
 class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()
 
+
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
 
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
@@ -38,9 +41,9 @@ class MainActivity : ComponentActivity() {
                             .padding(24.dp)
                     ) {
                         //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
-                            ExpandableCard(title = "Rooms", myRooms = myRooms)
-                            ExpandableCard(title = "Common Tasks")
-                            ExpandableCard(title = "Upcoming Tasks")
+                            ExpandableCard(title = "Rooms", myRooms = myRooms, inViewModel = viewModel)
+                            ExpandableCard(title = "Common Tasks", inViewModel = viewModel)
+                            ExpandableCard(title = "Upcoming Tasks", inViewModel = viewModel)
 
                     }
                 }
@@ -52,9 +55,9 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
-    ExpandableCard(title = "Rooms", myRooms = myRooms)
-    ExpandableCard(title = "Common Tasks")
-    ExpandableCard(title = "Upcoming Tasks")
+    //ExpandableCard(title = "Rooms", myRooms = myRooms, )
+    //ExpandableCard(title = "Common Tasks")
+    //ExpandableCard(title = "Upcoming Tasks")
 }
 
 @ExperimentalMaterialApi
@@ -62,8 +65,8 @@ fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
 @Composable
 fun DefaultPreview() {
     MyCleaningLogTheme {
-        ExpandableCard(title = "Rooms")
-        ExpandableCard(title = "Common Tasks")
-        ExpandableCard(title = "Upcoming Tasks")
+        //ExpandableCard(title = "Rooms")
+        //ExpandableCard(title = "Common Tasks")
+        //ExpandableCard(title = "Upcoming Tasks")
     }
 }

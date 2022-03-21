@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
         firestore.collection("myRooms").addSnapshotListener{
             snapshot, e->
                 if(e != null){
-                    Log.w("Listen faled", e)
+                    Log.w("Listen failed", e)
                     return@addSnapshotListener
                 }
             snapshot?.let {
