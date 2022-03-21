@@ -68,7 +68,7 @@ fun ExpandableCard(
                     easing = LinearOutSlowInEasing
                 )
             ),
-        onClick = { expandedState = !expandedState }
+        //onClick = { expandedState = !expandedState }
     ) {
         Column(
             modifier = Modifier
@@ -78,6 +78,22 @@ fun ExpandableCard(
         ) {
             //following code builds the row that the information will sit within
             Row(verticalAlignment = Alignment.CenterVertically) {
+
+                //creates the up and down arrow icon for if 1st level card has been expanded
+                IconButton(
+                    modifier = Modifier
+                        .alpha(ContentAlpha.medium)
+                        .weight(1f)
+                        .rotate(rotationState),
+                    onClick = {
+                        expandedState = !expandedState
+                    }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Drop-Down Arrow"
+                    )
+                }
+
                 //following code builds the first block of the row (this is the text/title section)
                 Text(
                     modifier = Modifier
@@ -188,41 +204,7 @@ fun ExpandableCard(
                             })
                         { Text(text = "other") }
                     }
-
-
-                    //creates the up and down arrow icon for if 1st level card has been expanded
-                    IconButton(
-                        modifier = Modifier
-                            .alpha(ContentAlpha.medium)
-                            .weight(1f)
-                            .rotate(rotationState),
-                        onClick = {
-                            expandedState = !expandedState
-                        }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Drop-Down Arrow"
-                        )
-                    }
                 }
-                //if the level 1 card is not titled "Rooms", do the following code which builds the second and third secions of the row (the buttons)
-                else {
-                    //creates the up and down arrow icon for if 1st level card has been expanded
-                    IconButton(
-                        modifier = Modifier
-                            .alpha(ContentAlpha.medium)
-                            .weight(1f)
-                            .rotate(rotationState),
-                        onClick = {
-                            expandedState = !expandedState
-                        }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Drop-Down Arrow"
-                        )
-                    }
-                }
-
             }
             //displays the options for if the card is expanded
             if (expandedState) {
