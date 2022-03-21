@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
 import com.example.mycleaninglog.ui.theme.RegularBlue
@@ -47,8 +48,10 @@ fun ExpandableCard(
     //Used for Add Room Button
     var addRoomShowMenu by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    var addRoomList = remember { mutableStateListOf<RoomClass>() }
+    //var addRoomList = remember { mutableStateListOf<RoomClass>() }
     var selectedMyRoom: myRoom? = null
+
+    lateinit var viewModel: MainViewModel
 
 
     //building the card
@@ -107,7 +110,11 @@ fun ExpandableCard(
                         //bedroom
                         DropdownMenuItem(
                             onClick = {
-
+                                var preConRoom = myRoom().apply{
+                                    myRoomName = "Bedroom"
+                                    myRoomID = "bed"
+                                }
+                                viewModel.save(preConRoom)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Bedroom") }
@@ -116,6 +123,7 @@ fun ExpandableCard(
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Bathroom")
+                                saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "Bathroom") }
@@ -221,7 +229,7 @@ fun ExpandableCard(
                     //passes each item on the addRoomList into expandable card level
 
 
-                    addRoomList.forEach { position -> ExpandableCardLevelTwo(title = position.name) }
+                    //addRoomList.forEach { position -> ExpandableCardLevelTwo(title = position.name) }
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"
@@ -243,7 +251,13 @@ fun ExpandableCard(
     }
 }
 
-
+fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
+    var preConRoom = myRoom().apply{
+        myRoomName = roomName
+        myRoomID = roomID
+    }
+    viewModel.save(preConRoom)
+}
 @ExperimentalMaterialApi
 @Composable
 @Preview

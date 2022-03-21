@@ -7,7 +7,7 @@ import com.example.mycleaninglog.dto.myRoom
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
-class MainViewModel:ViewModel() {
+class MainViewModel : ViewModel() {
     var myRooms: MutableLiveData<List<myRoom>> = MutableLiveData<List<myRoom>>()
     private lateinit var firestore : FirebaseFirestore
 
@@ -38,5 +38,14 @@ class MainViewModel:ViewModel() {
 
         }
     }
+
+    fun save(preConRoom: myRoom) {
+        val document = firestore.collection("myRooms").document()
+
+        val handle = document.set(preConRoom)
+        handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}
+        handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
+    }
+
 
 }
