@@ -228,10 +228,7 @@ fun ExpandableCard(
             if (expandedState) {
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
-
                     //passes each item on the addRoomList into expandable card level
-
-
                     myRooms.forEach { position -> ExpandableCardLevelTwo(title = position.myRoomName) }
                 }
 
