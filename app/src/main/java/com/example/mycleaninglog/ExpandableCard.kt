@@ -232,7 +232,7 @@ fun ExpandableCard(
                     //passes each item on the addRoomList into expandable card level
 
 
-                    //addRoomList.forEach { position -> ExpandableCardLevelTwo(title = position.name) }
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(title = position.myRoomName) }
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"
