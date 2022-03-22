@@ -49,9 +49,8 @@ fun ExpandableCard(
 
     //Used for Add Room Button
     var addRoomShowMenu by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-    //var addRoomList = remember { mutableStateListOf<RoomClass>() }
-    var selectedMyRoom: myRoom? = null
+    //val context = LocalContext.current
+    //var selectedMyRoom: myRoom? = null
 
     var viewModel = inViewModel
 
@@ -211,7 +210,7 @@ fun ExpandableCard(
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
-                    myRooms.forEach { position -> ExpandableCardLevelTwo(title = position.myRoomName) }
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position)}
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"
