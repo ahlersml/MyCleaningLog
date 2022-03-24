@@ -1,5 +1,6 @@
 package com.example.mycleaninglog
 
+import android.content.Context
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -35,6 +36,7 @@ import com.example.mycleaninglog.ui.theme.Gray
 
 fun ExpandableCard(
 
+    c: Context,
     title: String,
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
@@ -210,7 +212,7 @@ fun ExpandableCard(
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
-                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position)}
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c )}
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"

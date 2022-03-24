@@ -10,4 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="teal">#FF255957</color>
     <color name="off_white">#FFF5F0EA</color>
+    <color name="green">#009F06</color>
+    <color name="red">#FF0000</color>
+    <color name="skycolor">#2FB8F6</color>
 </resources>

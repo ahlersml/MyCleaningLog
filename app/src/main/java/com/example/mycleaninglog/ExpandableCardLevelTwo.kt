@@ -2,6 +2,7 @@ package com.example.mycleaninglog
 
 
 import android.app.AlertDialog
+import android.content.Context
 import android.widget.Button
 import android.widget.EditText
 import androidx.compose.animation.animateContentSize
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -24,7 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -36,20 +42,23 @@ import com.example.mycleaninglog.dto.myRoom
 @ExperimentalMaterialApi
 @Composable
 fun ExpandableCardLevelTwo(
-    //expandable text variables
-    titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
-    titleFontWeight: FontWeight = FontWeight.Bold,
+    //expandable card 2 variables
+    c: Context,
     selectedRoom: myRoom,
+    ) {
+
+    // used for expandable card level 2 functionality
+    var expandedState by remember { mutableStateOf(false) }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
     )
-    {
 
-        // used for expandable card level 2 functionality
-        var expandedState by remember { mutableStateOf(false) }
-        val rotationState by animateFloatAsState(
-            targetValue = if(expandedState) 180f else 0f)
+    //used for drop down menu
+    var dropDownMenu by remember { mutableStateOf(false) }
 
-        //used for drop down menu
-        var dropDownMenu by remember{mutableStateOf(false)}
+    //used for settings menu
+    var roomSettingsPopup by remember { mutableStateOf(false) }
+
 
 
         //building the card
@@ -92,8 +101,8 @@ fun ExpandableCardLevelTwo(
                         modifier = Modifier
                             .weight(6f),
                         text = selectedRoom.myRoomName,
-                        fontSize = titleFontSize,
-                        fontWeight = titleFontWeight,
+                        fontSize = MaterialTheme.typography.h6.fontSize,
+                        fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -103,45 +112,24 @@ fun ExpandableCardLevelTwo(
                             .alpha(ContentAlpha.medium)
                             .background(color = Color.Cyan)
                             .weight(1f),
-                        onClick = { dropDownMenu = !dropDownMenu }
+                        onClick = {
+                            roomSettingsPopup = !roomSettingsPopup
+                        }
+
                     ) {
                         Icon(
                             imageVector = Icons.Default.Menu,
                             contentDescription = "Menu Symbol"
                         )
                     }
-                    DropdownMenu(
-                        expanded = dropDownMenu,
-                        onDismissRequest = { dropDownMenu = false }) {
-                        //list of menu items to be displayed
-                        //bedroom
-                        DropdownMenuItem(
-                            onClick = {
-
-                                var changeNamePopup = NameChangePopup()
-                                changeNamePopup.show(supportFragmentManager,"nameChange")
-                                dropDownMenu = !dropDownMenu
-                            })
-                        { Text(text = "Rename Room") }
-
-                        DropdownMenuItem(
-                            onClick = {
-                                dropDownMenu = !dropDownMenu
-                            })
-                        { Text(text = "Delete Room") }
-
-                        DropdownMenuItem(
-                            onClick = {
-                                dropDownMenu = !dropDownMenu
-                            })
-                        { Text(text = "Add Cleaning Task") }
+                    if (roomSettingsPopup) {
+                        //var c = MainActivity()
+                        RoomSettingsDialogBox(c = c)
                     }
 
-
-
-                    }
+                }
                 //what happens if the card is expanded
-                if(expandedState){
+                if (expandedState) {
                     //currently just displays a text line
                     //needs to be replaced with code to show all tasks and timers
 
@@ -152,13 +140,6 @@ fun ExpandableCardLevelTwo(
 
         }
 
+
     }
 
-
-
-@ExperimentalMaterialApi
-@Composable
-@Preview
-fun ExpandableCardLevelTwoPreview(){
-    //ExpandableCard("Rooms")
-}

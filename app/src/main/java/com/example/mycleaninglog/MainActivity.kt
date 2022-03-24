@@ -40,9 +40,9 @@ class MainActivity : ComponentActivity() {
                             .padding(24.dp)
                     ) {
                         //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
-                            ExpandableCard(title = "Rooms", myRooms = myRooms, inViewModel = viewModel)
-                            ExpandableCard(title = "Common Tasks", inViewModel = viewModel)
-                            ExpandableCard(title = "Upcoming Tasks", inViewModel = viewModel)
+                            ExpandableCard(title = "Rooms", myRooms = myRooms, inViewModel = viewModel,c = this@MainActivity)
+                            ExpandableCard(title = "Common Tasks", inViewModel = viewModel, c = this@MainActivity)
+                            ExpandableCard(title = "Upcoming Tasks", inViewModel = viewModel, c = this@MainActivity)
 
                     }
                 }
