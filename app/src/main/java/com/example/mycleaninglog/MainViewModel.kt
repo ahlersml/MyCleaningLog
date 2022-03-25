@@ -40,7 +40,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun save(preConRoom: myRoom) {
-        val document = firestore.collection("myRooms").document()
+        val document = if(preConRoom.uniqueID == null || preConRoom.uniqueID.isEmpty()) {
+            firestore.collection("myRooms").document()
+        }else{
+            firestore.collection("myRooms").document(preConRoom.uniqueID)
+        }
         preConRoom.uniqueID = document.id
         val handle = document.set(preConRoom)
         handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}

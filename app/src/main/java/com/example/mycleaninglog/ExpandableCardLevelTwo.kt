@@ -45,6 +45,7 @@ fun ExpandableCardLevelTwo(
     //expandable card 2 variables
     c: Context,
     selectedRoom: myRoom,
+    viewModel: MainViewModel
     ) {
 
     // used for expandable card level 2 functionality
@@ -124,7 +125,7 @@ fun ExpandableCardLevelTwo(
                     }
                     if (roomSettingsPopup) {
                         //var c = MainActivity()
-                        RoomSettingsDialogBox(c = c)
+                        RoomSettingsDialogBox(c = c, selectedRoomSettings = selectedRoom, viewModel = viewModel)
                     }
 
                 }

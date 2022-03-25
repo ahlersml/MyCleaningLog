@@ -41,7 +41,7 @@ fun ExpandableCard(
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
     myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom(),
-    inViewModel: MainViewModel
+    viewModel: MainViewModel
     ) {
     //Used for Expandable card level 1 functionality
     var expandedState by remember { mutableStateOf(false) }
@@ -54,7 +54,7 @@ fun ExpandableCard(
     //val context = LocalContext.current
     //var selectedMyRoom: myRoom? = null
 
-    var viewModel = inViewModel
+    //var viewModel = inViewModel
 
 
     //building the card
@@ -212,7 +212,7 @@ fun ExpandableCard(
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
-                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c )}
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel )}
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"
