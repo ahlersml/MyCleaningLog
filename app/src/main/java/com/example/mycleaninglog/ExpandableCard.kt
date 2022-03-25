@@ -239,7 +239,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         myRoomName = roomName
         myRoomID = roomID
     }
-    viewModel.save(preConRoom)
+    viewModel.saveRoom(preConRoom)
 }
 @ExperimentalMaterialApi
 @Composable

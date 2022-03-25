@@ -39,7 +39,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun save(preConRoom: myRoom) {
+    fun saveRoom(preConRoom: myRoom) {
         val document = if(preConRoom.uniqueID == null || preConRoom.uniqueID.isEmpty()) {
             firestore.collection("myRooms").document()
         }else{
@@ -50,6 +50,12 @@ class MainViewModel : ViewModel() {
         handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}
         handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
     }
+
+    fun deleteRoom(preConRoom: myRoom) {
+        val document = firestore.collection("myRooms").document(preConRoom.uniqueID)
+        document.delete()
+    }
+
 
 
 }

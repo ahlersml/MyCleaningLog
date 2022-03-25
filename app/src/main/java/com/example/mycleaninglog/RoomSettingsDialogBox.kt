@@ -106,7 +106,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     Button(
                         onClick = {
                             selectedRoomSettings.myRoomName = nameChange.value
-                            viewModel.save(selectedRoomSettings)
+                            viewModel.saveRoom(selectedRoomSettings)
 
                             openDialog.value = false
                         },
@@ -159,6 +159,9 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Button(
                         onClick = {
+
+                            viewModel.deleteRoom(selectedRoomSettings)
+
                             openDialog.value = false
                         },
                         modifier = Modifier
