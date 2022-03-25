@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 
 @ExperimentalMaterialApi
@@ -45,7 +46,8 @@ fun ExpandableCardLevelTwo(
     //expandable card 2 variables
     c: Context,
     selectedRoom: myRoom,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    myCleaningTasks: List<cleaningTask> = ArrayList<cleaningTask>()
     ) {
 
     // used for expandable card level 2 functionality
@@ -133,8 +135,22 @@ fun ExpandableCardLevelTwo(
                 if (expandedState) {
                     //currently just displays a text line
                     //needs to be replaced with code to show all tasks and timers
+                        //Text(text = "testing")
+                    myCleaningTasks.forEach { position -> Text(text = position.cleaningTaskName)}
+                    /**myCleaningTasks.forEach { position ->
+                        Row(verticalAlignment = Alignment.CenterVertically){
+                            Text(
+                                modifier = Modifier
+                                    .weight(6f),
+                                text = position.cleaningTaskName,
+                                fontSize = MaterialTheme.typography.h6.fontSize,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
 
-                    Text(text = selectedRoom.uniqueID)
+                        }
+                    }*/
 
                 }
             }
