@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
+            val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
 
             MyCleaningLogTheme {
                 // A surface container using the 'background' color from the theme
@@ -43,9 +44,9 @@ class MainActivity : ComponentActivity() {
 
                             //call a header with title and logo
 
-                            ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity)
-                            ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity)
-                            ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity)
+                            ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
 
                     }
                 }

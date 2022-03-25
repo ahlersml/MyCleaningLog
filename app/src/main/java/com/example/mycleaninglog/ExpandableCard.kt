@@ -27,8 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
+import com.google.firebase.platforminfo.DefaultUserAgentPublisher
 
 
 @ExperimentalMaterialApi
@@ -40,7 +42,8 @@ fun ExpandableCard(
     title: String,
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
-    myRooms: List<myRoom> = ArrayList<myRoom>(), selectedMyRoom : myRoom = myRoom(),
+    myRooms: List<myRoom> = ArrayList<myRoom>(),
+    myCleaningTasks: List<cleaningTask> = ArrayList<cleaningTask>(),
     viewModel: MainViewModel
     ) {
     //Used for Expandable card level 1 functionality
@@ -240,6 +243,72 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         myRoomID = roomID
     }
     viewModel.saveRoom(preConRoom)
+    if(preConRoom.myRoomName == "Bedroom"){
+        saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Wash Bedding", "WAS", viewModel, preConRoom)
+        saveCleaningTask("Laundry", "LAU", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Bathroom"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+        saveCleaningTask("Scrub Vanity", "VAN", viewModel, preConRoom)
+        saveCleaningTask("Scrub Shower", "SHO", viewModel, preConRoom)
+        saveCleaningTask("Scrub Bath Tub", "TUB", viewModel, preConRoom)
+        saveCleaningTask("Scrub Toilet", "TOI", viewModel, preConRoom)
+        saveCleaningTask("Wipe Down Mirror", "MIR", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Kitchen"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+        saveCleaningTask("Scrub Counter Tops", "COU", viewModel, preConRoom)
+        saveCleaningTask("Scrub Sink", "SIN", viewModel, preConRoom)
+        saveCleaningTask("Clean Microwave", "MIC", viewModel, preConRoom)
+        saveCleaningTask("Clean Fridge", "Fri", viewModel, preConRoom)
+        saveCleaningTask("Clean Oven", "OVE", viewModel, preConRoom)
+        saveCleaningTask("Clean Cabinets/Drawers", "CAB", viewModel, preConRoom)
+        saveCleaningTask("Wash Kitchen Towels/Rags", "TOW", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Dining Room"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+        saveCleaningTask("Clean Table", "TAB", viewModel, preConRoom)
+        saveCleaningTask("Wash Linens", "Lin", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Living Room"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+        saveCleaningTask("Clean Upholstery", "UPH", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Outdoors"){
+        saveCleaningTask("Mow", "MOW", viewModel, preConRoom)
+        saveCleaningTask("Pull Weeds", "WEE", viewModel, preConRoom)
+        saveCleaningTask("Water Flowers/Garden", "WAT", viewModel, preConRoom)
+        saveCleaningTask("Clean Grill", "GRI", viewModel, preConRoom)
+        saveCleaningTask("Clean Deck/Porch", "DEC", viewModel, preConRoom)
+        saveCleaningTask("Clean Windows", "WIN", viewModel, preConRoom)
+        saveCleaningTask("Clean Siding/Brick", "GRI", viewModel, preConRoom)
+        saveCleaningTask("Take Out Trash", "GRI", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Garage"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Clean Garage Door", "VAC", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+    }
+    if(preConRoom.myRoomName == "Utility Room"){
+        saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
+        saveCleaningTask("Replace Furnace Filter", "VAC", viewModel, preConRoom)
+        saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
+    }
+}
+
+fun saveCleaningTask(taskName: String, taskID: String, viewModel: MainViewModel, preConRoom: myRoom){
+    var preConTask = cleaningTask().apply{
+        cleaningTaskName = taskName
+        cleaningTaskId = taskID
+    }
+    viewModel.saveCleaningTask(preConTask, preConRoom)
 }
 @ExperimentalMaterialApi
 @Composable
