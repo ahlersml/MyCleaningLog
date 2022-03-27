@@ -17,14 +17,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mycleaninglog.dto.myRoom
+import com.example.mycleaninglog.dto.User
 import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.firebase.ui.auth.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 
 
@@ -102,6 +103,11 @@ class MainActivity : ComponentActivity() {
         val response = result.idpResponse
         if (result.resultCode == ComponentActivity.RESULT_OK) {
             firebaseUser = FirebaseAuth.getInstance().currentUser
+            firebaseUser?.let {
+                val user = User(it.uid, it.displayName)
+                viewModel.user = user
+                viewModel.saveUser()
+            }
 
         } else {
             Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
+import com.example.mycleaninglog.dto.User
 import com.google.android.gms.common.config.GservicesValue.value
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
@@ -18,6 +19,7 @@ class MainViewModel : ViewModel() {
     //private lateinit var selectedRoom: myRoom
     var selectedRoom : myRoom? = null
     private lateinit var firestore : FirebaseFirestore
+    var user : User? = null
 
     init {
         firestore = FirebaseFirestore.getInstance()
@@ -100,6 +102,16 @@ class MainViewModel : ViewModel() {
         val handle = document.set(preConTask)
         handle.addOnSuccessListener{Log.d("Firebase", "DocumentSaved")}
         handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
+    }
+
+    fun saveUser() {
+        user?.let {
+            user->
+            val handle = firestore.collection("users").document(user.uid).set(user)
+            handle.addOnSuccessListener { Log.d("Firebase", "Document Saved") }
+            handle.addOnFailureListener { Log.e("Firebase", "Save failed $it ") }
+        }
+
     }
 
 }
