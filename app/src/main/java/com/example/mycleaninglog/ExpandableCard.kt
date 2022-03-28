@@ -56,9 +56,8 @@ fun ExpandableCard(
     var addRoomShowMenu by remember { mutableStateOf(false) }
     //val context = LocalContext.current
     //var selectedMyRoom: myRoom? = null
-
     //var viewModel = inViewModel
-
+viewModel.listenToMyRooms()
 
     //building the card
     val dark = isSystemInDarkTheme()
@@ -215,6 +214,7 @@ fun ExpandableCard(
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
+
                     myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel )}
                 }
 

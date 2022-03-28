@@ -20,7 +20,7 @@ class MainViewModel : ViewModel() {
     var selectedRoom : myRoom? = null
     private lateinit var firestore : FirebaseFirestore
     var user : User? = null
-
+    var users: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
     init {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -28,25 +28,29 @@ class MainViewModel : ViewModel() {
         listenToCleaningTasks()
     }
 
-    private fun listenToMyRooms() {
-        firestore.collection("myRooms").addSnapshotListener{
-            snapshot, e->
-                if(e != null){
-                    Log.w("Listen failed", e)
-                    return@addSnapshotListener
-                }
-            snapshot?.let {
-                val allMyRooms = ArrayList<myRoom>()
-                val documents = snapshot.documents
-                documents.forEach{
-                    var myRoom = it.toObject(myRoom::class.java)
-                    myRoom?.let{
-                        allMyRooms.add(it)
+    fun listenToMyRooms() {
+        user?.let {
+            user ->
+            firestore.collection("users").document(user.uid).collection("myRooms").addSnapshotListener{
+                snapshot, e->
+                    if(e != null){
+                        Log.w("Listen failed", e)
+                        return@addSnapshotListener
                     }
-                }
-                myRooms.value = allMyRooms
-            }
+                snapshot?.let {
 
+                    val allMyRooms = ArrayList<myRoom>()
+                    val documents = snapshot.documents
+                    documents.forEach{
+                        var myRoom = it.toObject(myRoom::class.java)
+                        myRoom?.let{
+                            allMyRooms.add(it)
+                        }
+                    }
+                    myRooms.value = allMyRooms
+                }
+
+            }
         }
     }
     private fun listenToCleaningTasks() {
@@ -76,15 +80,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun saveRoom(preConRoom: myRoom) {
-        val document = if(preConRoom.uniqueID == null || preConRoom.uniqueID.isEmpty()) {
-            firestore.collection("myRooms").document()
-        }else{
-            firestore.collection("myRooms").document(preConRoom.uniqueID)
+        user?.let{
+            user ->
+            val document = if(preConRoom.uniqueID == null || preConRoom.uniqueID.isEmpty()) {
+                firestore.collection("users").document(user.uid).collection("myRooms").document()
+            }else{
+                firestore.collection("users").document(user.uid).collection("myRooms").document(preConRoom.uniqueID)
+            }
+            preConRoom.uniqueID = document.id
+            val handle = document.set(preConRoom)
+            handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}
+            handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
         }
-        preConRoom.uniqueID = document.id
-        val handle = document.set(preConRoom)
-        handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}
-        handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
     }
 
     fun deleteRoom(preConRoom: myRoom) {

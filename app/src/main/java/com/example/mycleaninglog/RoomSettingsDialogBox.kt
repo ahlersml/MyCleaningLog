@@ -1,7 +1,9 @@
 package com.example.mycleaninglog
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -23,9 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
-
-
-
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -36,12 +35,15 @@ import androidx.compose.ui.window.Dialog
 import com.example.mycleaninglog.dto.myRoom
 
 
+
+
 @ExperimentalMaterialApi
 @Composable
 fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: MainViewModel) {
     val openDialog = remember { mutableStateOf(true) }
     val nameChange = remember {mutableStateOf("")}
     val addTask = remember {mutableStateOf("")}
+
 
 
     if(openDialog.value){
@@ -265,5 +267,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
             shape = RoundedCornerShape(25.dp)
         )
     }*/
+
 }
 

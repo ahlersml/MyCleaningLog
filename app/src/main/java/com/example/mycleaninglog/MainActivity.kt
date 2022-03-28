@@ -39,9 +39,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
+            firebaseUser?.let {
+                val user = User(it.uid, "")
+                viewModel.user = user
+                viewModel.listenToMyRooms()
+            }
+            val user by viewModel.users.observeAsState(initial = emptyList())
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
+
 
             MyCleaningLogTheme {
                 // A surface container using the 'background' color from the theme
