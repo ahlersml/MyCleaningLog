@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 
 @ExperimentalMaterialApi
@@ -45,7 +46,9 @@ fun ExpandableCardLevelTwo(
     //expandable card 2 variables
     c: Context,
     selectedRoom: myRoom,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    myCleaningTasks: List<cleaningTask>,
+    myRooms: List<myRoom>
     ) {
 
     // used for expandable card level 2 functionality
@@ -54,12 +57,18 @@ fun ExpandableCardLevelTwo(
         targetValue = if (expandedState) 180f else 0f
     )
 
+
+
+    //viewModel.selectedRoom = selectedRoom
+    //viewModel.listenToCleaningTasks()
+
+
+
     //used for drop down menu
     var dropDownMenu by remember { mutableStateOf(false) }
 
     //used for settings menu
     var roomSettingsPopup by remember { mutableStateOf(false) }
-
 
 
         //building the card
@@ -72,7 +81,7 @@ fun ExpandableCardLevelTwo(
                         easing = LinearOutSlowInEasing
                     )
                 ),
-            //onClick = { expandedState = !expandedState }
+            //onClick = { selectedRoom.expanded = true }
         ) {
             Column(
                 modifier = Modifier
@@ -89,7 +98,19 @@ fun ExpandableCardLevelTwo(
                             .weight(1f)
                             .rotate(rotationState),
                         onClick = {
-                            expandedState = !expandedState
+                            //expands or closes the room that is clicked but also closes all rooms other than that room
+                            if(!selectedRoom.expanded) {
+                                myRooms.forEach { position -> position.expanded = false }
+                                myRooms.forEach { position -> viewModel.saveRoom(position) }
+                                expandedState = false
+                                selectedRoom.expanded = true
+                                viewModel.saveRoom(selectedRoom)
+                                expandedState = !expandedState
+                            }else{
+                                expandedState = false
+                                selectedRoom.expanded = false
+                                viewModel.saveRoom(selectedRoom)
+                            }
                         }) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
@@ -123,6 +144,7 @@ fun ExpandableCardLevelTwo(
                             contentDescription = "Menu Symbol"
                         )
                     }
+                    //creates the room settings popup dialog
                     if (roomSettingsPopup) {
                         //var c = MainActivity()
                         RoomSettingsDialogBox(c = c, selectedRoomSettings = selectedRoom, viewModel = viewModel)
@@ -130,12 +152,19 @@ fun ExpandableCardLevelTwo(
 
                 }
                 //what happens if the card is expanded
+                if (selectedRoom.expanded){
                 if (expandedState) {
+                    viewModel.selectedRoom = selectedRoom
+                    viewModel.listenToCleaningTasks()
+
                     //currently just displays a text line
                     //needs to be replaced with code to show all tasks and timers
+                    //Text(text = "testing")
+                    myCleaningTasks.forEach { position -> Text(text = position.cleaningTaskName) }
 
-                    Text(text = selectedRoom.uniqueID)
-
+                }else{
+                    expandedState = !expandedState
+                }
                 }
             }
 

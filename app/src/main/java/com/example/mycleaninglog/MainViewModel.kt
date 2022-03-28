@@ -16,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 class MainViewModel : ViewModel() {
     var myRooms: MutableLiveData<List<myRoom>> = MutableLiveData<List<myRoom>>()
     var cleaningTasks: MutableLiveData<List<cleaningTask>> = MutableLiveData<List<cleaningTask>>()
-    //private lateinit var selectedRoom: myRoom
     var selectedRoom : myRoom? = null
     private lateinit var firestore : FirebaseFirestore
     var user : User? = null
@@ -25,7 +24,7 @@ class MainViewModel : ViewModel() {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
         listenToMyRooms()
-        listenToCleaningTasks()
+
     }
 
     fun listenToMyRooms() {
@@ -53,7 +52,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-    private fun listenToCleaningTasks() {
+    internal fun listenToCleaningTasks() {
         selectedRoom?.let{
             selectedRoom->
 

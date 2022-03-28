@@ -43,7 +43,7 @@ fun ExpandableCard(
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
     myRooms: List<myRoom> = ArrayList<myRoom>(),
-    myCleaningTasks: List<cleaningTask> = ArrayList<cleaningTask>(),
+    myCleaningTasks: List<cleaningTask>,
     viewModel: MainViewModel
     ) {
     //Used for Expandable card level 1 functionality
@@ -214,8 +214,7 @@ viewModel.listenToMyRooms()
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
-
-                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel )}
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel, myCleaningTasks = myCleaningTasks, myRooms = myRooms )}
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"
@@ -242,6 +241,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         myRoomName = roomName
         myRoomID = roomID
     }
+    //creates prebuilt tasks into bedroom
     viewModel.saveRoom(preConRoom)
     if(preConRoom.myRoomName == "Bedroom"){
         saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
@@ -249,6 +249,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Wash Bedding", "WAS", viewModel, preConRoom)
         saveCleaningTask("Laundry", "LAU", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into bathroom
     if(preConRoom.myRoomName == "Bathroom"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -258,6 +259,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Scrub Toilet", "TOI", viewModel, preConRoom)
         saveCleaningTask("Wipe Down Mirror", "MIR", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into kitchen
     if(preConRoom.myRoomName == "Kitchen"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -269,18 +271,21 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Clean Cabinets/Drawers", "CAB", viewModel, preConRoom)
         saveCleaningTask("Wash Kitchen Towels/Rags", "TOW", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into dining room
     if(preConRoom.myRoomName == "Dining Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
         saveCleaningTask("Clean Table", "TAB", viewModel, preConRoom)
         saveCleaningTask("Wash Linens", "Lin", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into living room
     if(preConRoom.myRoomName == "Living Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
         saveCleaningTask("Clean Upholstery", "UPH", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into outdoors
     if(preConRoom.myRoomName == "Outdoors"){
         saveCleaningTask("Mow", "MOW", viewModel, preConRoom)
         saveCleaningTask("Pull Weeds", "WEE", viewModel, preConRoom)
@@ -291,11 +296,13 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Clean Siding/Brick", "GRI", viewModel, preConRoom)
         saveCleaningTask("Take Out Trash", "GRI", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into garage
     if(preConRoom.myRoomName == "Garage"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Clean Garage Door", "VAC", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
     }
+    //creates prebuilt tasks into utility room
     if(preConRoom.myRoomName == "Utility Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Replace Furnace Filter", "VAC", viewModel, preConRoom)
@@ -303,17 +310,12 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
     }
 }
 
+//creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
 fun saveCleaningTask(taskName: String, taskID: String, viewModel: MainViewModel, preConRoom: myRoom){
     var preConTask = cleaningTask().apply{
         cleaningTaskName = taskName
         cleaningTaskId = taskID
     }
     viewModel.saveCleaningTask(preConTask, preConRoom)
-}
-@ExperimentalMaterialApi
-@Composable
-@Preview
-fun ExpandableCardPreview(){
-    //ExpandableCard("Rooms")
 }
 

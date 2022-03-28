@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()
 
-
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,6 @@ class MainActivity : ComponentActivity() {
             val user by viewModel.users.observeAsState(initial = emptyList())
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
-
 
             MyCleaningLogTheme {
                 // A surface container using the 'background' color from the theme
@@ -130,16 +128,3 @@ fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
     //ExpandableCard(title = "Common Tasks")
     //ExpandableCard(title = "Upcoming Tasks")
 }
-
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyCleaningLogTheme {
-        //ExpandableCard(title = "Rooms")
-        //ExpandableCard(title = "Common Tasks")
-        //ExpandableCard(title = "Upcoming Tasks")
-    }
-}
-
-
