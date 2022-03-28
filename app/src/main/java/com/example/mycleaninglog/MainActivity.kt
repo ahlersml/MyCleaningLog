@@ -41,9 +41,6 @@ class MainActivity : ComponentActivity() {
                             .padding(24.dp)
                     ) {
                         //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
-
-                            //call a header with title and logo
-
                             ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
@@ -61,15 +58,4 @@ fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
     //ExpandableCard(title = "Rooms", myRooms = myRooms, )
     //ExpandableCard(title = "Common Tasks")
     //ExpandableCard(title = "Upcoming Tasks")
-}
-
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyCleaningLogTheme {
-        //ExpandableCard(title = "Rooms")
-        //ExpandableCard(title = "Common Tasks")
-        //ExpandableCard(title = "Upcoming Tasks")
-    }
 }

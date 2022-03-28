@@ -63,6 +63,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     Spacer(modifier = Modifier.padding(5.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically){
+                        //Header to dialog box
                         Text(
                             modifier = Modifier
                                 .weight(6f)
@@ -72,6 +73,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp
                         )
+                        //cancel button to dialog box
                         IconButton(
                             onClick = {
                                 openDialog.value = false
@@ -95,6 +97,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
+                    //text box for changing room name
                     OutlinedTextField(
                         value = nameChange.value,
                         onValueChange = { nameChange.value = it },
@@ -103,6 +106,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
+                    //submit button for changing room name
                     Button(
                         onClick = {
                             selectedRoomSettings.myRoomName = nameChange.value
@@ -127,6 +131,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
+                    //text field for adding a task
                     OutlinedTextField(
                         value = addTask.value,
                         onValueChange = { addTask.value = it },
@@ -136,6 +141,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
+                    //button for adding a task
                     Button(
                         onClick = {
                             openDialog.value = false
@@ -157,6 +163,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(15.dp))
 
+                    //button to delete the room
                     Button(
                         onClick = {
 

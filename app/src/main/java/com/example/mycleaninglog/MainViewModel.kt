@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 class MainViewModel : ViewModel() {
     var myRooms: MutableLiveData<List<myRoom>> = MutableLiveData<List<myRoom>>()
     var cleaningTasks: MutableLiveData<List<cleaningTask>> = MutableLiveData<List<cleaningTask>>()
-    //private lateinit var selectedRoom: myRoom
     var selectedRoom : myRoom? = null
     private lateinit var firestore : FirebaseFirestore
 

@@ -98,7 +98,7 @@ fun ExpandableCardLevelTwo(
                             .weight(1f)
                             .rotate(rotationState),
                         onClick = {
-
+                            //expands or closes the room that is clicked but also closes all rooms other than that room
                             if(!selectedRoom.expanded) {
                                 myRooms.forEach { position -> position.expanded = false }
                                 myRooms.forEach { position -> viewModel.saveRoom(position) }
@@ -111,23 +111,6 @@ fun ExpandableCardLevelTwo(
                                 selectedRoom.expanded = false
                                 viewModel.saveRoom(selectedRoom)
                             }
-
-                            /**if(expandedState){
-                                expandedState = false
-                            }
-
-                            if (!expandedState) {
-                                selectedRoom.expanded = true
-                                viewModel.saveRoom(selectedRoom)
-                                expandedState = !expandedState
-                            }else {
-                                selectedRoom.expanded = false
-                                viewModel.saveRoom(selectedRoom)
-                                expandedState = !expandedState
-                            }*/
-                            //if(selectedRoom.expanded) {
-                               // expandedState = !expandedState
-                            //}
                         }) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
@@ -161,6 +144,7 @@ fun ExpandableCardLevelTwo(
                             contentDescription = "Menu Symbol"
                         )
                     }
+                    //creates the room settings popup dialog
                     if (roomSettingsPopup) {
                         //var c = MainActivity()
                         RoomSettingsDialogBox(c = c, selectedRoomSettings = selectedRoom, viewModel = viewModel)
@@ -177,20 +161,7 @@ fun ExpandableCardLevelTwo(
                     //needs to be replaced with code to show all tasks and timers
                     //Text(text = "testing")
                     myCleaningTasks.forEach { position -> Text(text = position.cleaningTaskName) }
-                    /**myCleaningTasks.forEach { position ->
-                    Row(verticalAlignment = Alignment.CenterVertically){
-                    Text(
-                    modifier = Modifier
-                    .weight(6f),
-                    text = position.cleaningTaskName,
-                    fontSize = MaterialTheme.typography.h6.fontSize,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                    )
 
-                    }
-                    }*/
                 }else{
                     expandedState = !expandedState
                 }
