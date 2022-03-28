@@ -43,7 +43,7 @@ fun ExpandableCard(
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Bold,
     myRooms: List<myRoom> = ArrayList<myRoom>(),
-    myCleaningTasks: List<cleaningTask> = ArrayList<cleaningTask>(),
+    myCleaningTasks: List<cleaningTask>,
     viewModel: MainViewModel
     ) {
     //Used for Expandable card level 1 functionality
@@ -215,7 +215,7 @@ fun ExpandableCard(
                 //what to do if the 1st level expandable card is labeled "Rooms"
                 if (title == "Rooms") {
                     //passes each item on the addRoomList into expandable card level
-                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel, myCleaningTasks = myCleaningTasks )}
+                    myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel, myCleaningTasks = myCleaningTasks, myRooms = myRooms )}
                 }
 
                 //what to do if the 1st level expandable card is labeled "Common Tasks"

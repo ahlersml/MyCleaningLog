@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
         listenToMyRooms()
-        listenToCleaningTasks()
+
     }
 
     private fun listenToMyRooms() {
@@ -47,7 +47,7 @@ class MainViewModel : ViewModel() {
 
         }
     }
-    private fun listenToCleaningTasks() {
+    internal fun listenToCleaningTasks() {
         selectedRoom?.let{
             selectedRoom->
 
@@ -59,7 +59,6 @@ class MainViewModel : ViewModel() {
             }
             snapshot?.let {
                 val allMyTasks = ArrayList<cleaningTask>()
-                allMyTasks.add(cleaningTask(cleaningTaskName = "New Task"))
                 val documents = snapshot.documents
                 documents.forEach{
                     var myTask = it.toObject(cleaningTask::class.java)
