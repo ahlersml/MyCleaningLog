@@ -3,6 +3,7 @@ package com.example.mycleaninglog
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,9 +21,13 @@ class MainViewModel : ViewModel() {
     private lateinit var firestore : FirebaseFirestore
     var user : User? = null
     var users: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
+
+
+
     init {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+
         listenToMyRooms()
 
     }
@@ -94,8 +99,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun deleteRoom(preConRoom: myRoom) {
-        val document = firestore.collection("myRooms").document(preConRoom.uniqueID)
+        user?.let {
+            user->
+        val document = firestore.collection("users").document(user.uid).collection("myRooms").document(preConRoom.uniqueID)
         document.delete()
+        }
     }
 
     fun saveCleaningTask(preConTask: cleaningTask, selectedRoom: myRoom){
