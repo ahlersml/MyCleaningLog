@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,6 +60,13 @@ fun ExpandableCard(
     //var selectedMyRoom: myRoom? = null
     //var viewModel = inViewModel
 viewModel.listenToMyRooms()
+
+    val montFont = FontFamily(
+        Font(R.font.mont, FontWeight.Normal)
+    )
+    val louisFont = FontFamily(
+        Font(R.font.louis, FontWeight.Normal)
+    )
 
     //building the card
     val dark = isSystemInDarkTheme()
@@ -103,6 +112,7 @@ viewModel.listenToMyRooms()
                         .background(color = color)
                         .weight(6f),
                     text = title,
+                    fontFamily = montFont,
                     fontSize = titleFontSize,
                     fontWeight = titleFontWeight,
                     maxLines = 1,
@@ -134,7 +144,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Bedroom", "Bed", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bedroom") }
+                        { Text(text = "Bedroom", fontFamily = louisFont) }
 
                         //bathroom
                         DropdownMenuItem(
@@ -142,7 +152,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bathroom") }
+                        { Text(text = "Bathroom", fontFamily = louisFont) }
 
                         //kitchen
                         DropdownMenuItem(
@@ -151,7 +161,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Kitchen", "Kit", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Kitchen") }
+                        { Text(text = "Kitchen", fontFamily = louisFont) }
 
                         //Dining room
                         DropdownMenuItem(
@@ -160,7 +170,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Dining Room", "Din", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Dining Room") }
+                        { Text(text = "Dining Room", fontFamily = louisFont) }
 
                         //living room
                         DropdownMenuItem(
@@ -169,7 +179,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Living Room", "Liv", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Living Room") }
+                        { Text(text = "Living Room", fontFamily = louisFont) }
 
                         //outdoors
                         DropdownMenuItem(
@@ -178,7 +188,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Outdoors", "Out", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Outdoors") }
+                        { Text(text = "Outdoors", fontFamily = louisFont) }
 
                         //garage
                         DropdownMenuItem(
@@ -187,7 +197,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Garage", "Gar", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Garage") }
+                        { Text(text = "Garage", fontFamily = louisFont) }
 
                         //utility room
                         DropdownMenuItem(
@@ -196,7 +206,7 @@ viewModel.listenToMyRooms()
                                 saveItem("Utility Room", "Util", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Utility Room") }
+                        { Text(text = "Utility Room", fontFamily = louisFont) }
 
                         //other
                         DropdownMenuItem(
@@ -205,7 +215,7 @@ viewModel.listenToMyRooms()
                                 //add code here to create a new room that is not in the list
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "other") }
+                        { Text(text = "other", fontFamily = louisFont) }
                     }
                 }
             }

@@ -12,6 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,6 +48,12 @@ class MainActivity : ComponentActivity() {
             val user by viewModel.users.observeAsState(initial = emptyList())
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
+            val montFont = FontFamily(
+                Font(R.font.mont, FontWeight.Normal)
+            )
+            val louisFont = FontFamily(
+                Font(R.font.louis, FontWeight.Normal)
+            )
 
             MyCleaningLogTheme {
                 // A surface container using the 'background' color from the theme
@@ -68,6 +76,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text(
                                 text = "Login",
+                                fontFamily = louisFont,
                                 color = Color.White,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold
