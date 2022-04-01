@@ -7,16 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
 import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
 import com.firebase.ui.auth.AuthUI
@@ -74,7 +71,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                            ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            ExpandableCard(title = "Rooms", MyRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
 
@@ -83,7 +80,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    fun signIn() {
+    private fun signIn() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
         )
@@ -121,10 +118,3 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@ExperimentalMaterialApi
-@Composable
-fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
-    //ExpandableCard(title = "Rooms", myRooms = myRooms, )
-    //ExpandableCard(title = "Common Tasks")
-    //ExpandableCard(title = "Upcoming Tasks")
-}
