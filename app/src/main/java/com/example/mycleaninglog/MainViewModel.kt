@@ -118,6 +118,11 @@ class MainViewModel : ViewModel() {
         handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
     }
 
+    fun deleteCleaningTask(preConTask: cleaningTask, selectedRoom: myRoom){
+        val document = firestore.collection("users").document(user.uid).collection("cleaningTasks").document(preConRoom.uniqueID)
+        document.delete()
+    }
+
     fun saveUser() {
         user?.let {
             user->
