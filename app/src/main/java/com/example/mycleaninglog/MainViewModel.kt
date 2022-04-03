@@ -133,4 +133,10 @@ class MainViewModel : ViewModel() {
 
     }
 
+    fun deleteUser() {
+        val document = firestore.collection("users").document(user.uid)
+        document.delete()
+    }
+
+
 }
