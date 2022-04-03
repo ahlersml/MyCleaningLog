@@ -134,15 +134,20 @@ viewModel.listenToMyRooms()
                                 saveItem("Bedroom", "Bed", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bedroom") }
+                        { Text(
+                            text = "Bedroom"
+                        ) }
 
                         //bathroom
                         DropdownMenuItem(
                             onClick = {
+                                //addRoomList.add("Bathroom")
                                 saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bathroom") }
+                        { Text(
+                            text = "Bathroom"
+                        ) }
 
                         //kitchen
                         DropdownMenuItem(
@@ -151,7 +156,9 @@ viewModel.listenToMyRooms()
                                 saveItem("Kitchen", "Kit", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Kitchen") }
+                        { Text(
+                            text = "Kitchen"
+                        ) }
 
                         //Dining room
                         DropdownMenuItem(
@@ -160,7 +167,9 @@ viewModel.listenToMyRooms()
                                 saveItem("Dining Room", "Din", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Dining Room") }
+                        { Text(
+                            text = "Dining Room"
+                        ) }
 
                         //living room
                         DropdownMenuItem(
@@ -169,7 +178,9 @@ viewModel.listenToMyRooms()
                                 saveItem("Living Room", "Liv", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Living Room") }
+                        { Text(
+                            text = "Living Room"
+                        ) }
 
                         //outdoors
                         DropdownMenuItem(
@@ -187,7 +198,9 @@ viewModel.listenToMyRooms()
                                 saveItem("Garage", "Gar", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Garage") }
+                        { Text(
+                            text = "Garage"
+                        ) }
 
                         //utility room
                         DropdownMenuItem(
@@ -205,7 +218,9 @@ viewModel.listenToMyRooms()
                                 //add code here to create a new room that is not in the list
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "other") }
+                        { Text(
+                            text = "other"
+                        ) }
                     }
                 }
             }

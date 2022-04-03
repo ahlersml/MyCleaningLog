@@ -87,12 +87,13 @@ class MainActivity : ComponentActivity() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
         )
-        val signinIntent = AuthUI.getInstance()
+        // Create and launch sign-in intent
+        val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
             .build()
 
-        signInLauncher.launch(signinIntent)
+        signInLauncher.launch(signInIntent)
     }
 
     var firebaseUser: FirebaseUser? = null
