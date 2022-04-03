@@ -139,6 +139,7 @@ viewModel.listenToMyRooms()
                         //bathroom
                         DropdownMenuItem(
                             onClick = {
+                                //addRoomList.add("Bathroom")
                                 saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
