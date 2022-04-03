@@ -34,7 +34,7 @@ class MainViewModel : ViewModel() {
 
     fun listenToMyRooms() {
         user?.let {
-            user ->
+            user->
             firestore.collection("users").document(user.uid).collection("myRooms").addSnapshotListener{
                 snapshot, e->
                     if(e != null){
@@ -63,17 +63,17 @@ class MainViewModel : ViewModel() {
 
         firestore.collection("myRooms").document(selectedRoom.uniqueID).collection("cleaningTasks").addSnapshotListener{
                 snapshot, e->
-            if(e != null){
-                Log.w("Listen failed", e)
-                return@addSnapshotListener
-            }
-            snapshot?.let {
-                val allMyTasks = ArrayList<cleaningTask>()
-                val documents = snapshot.documents
+                    if(e != null){
+                        Log.w("Listen failed", e)
+                        return@addSnapshotListener
+                 }
+                snapshot?.let {
+                    val allMyTasks = ArrayList<cleaningTask>()
+                    val documents = snapshot.documents
                 documents.forEach{
-                    var myTask = it.toObject(cleaningTask::class.java)
-                    myTask?.let{
-                        allMyTasks.add(it)
+                        var myTask = it.toObject(cleaningTask::class.java)
+                        myTask?.let{
+                            allMyTasks.add(it)
                     }
                 }
                 cleaningTasks.value = allMyTasks
@@ -92,7 +92,7 @@ class MainViewModel : ViewModel() {
                 firestore.collection("users").document(user.uid).collection("myRooms").document(preConRoom.uniqueID)
             }
             preConRoom.uniqueID = document.id
-            val handle = document.set(preConRoom)
+                val handle = document.set(preConRoom)
             handle.addOnSuccessListener{Log.d("Firebase", "Document Saved")}
             handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
         }
