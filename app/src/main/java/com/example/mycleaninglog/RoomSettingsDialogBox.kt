@@ -43,6 +43,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
     val addTask = remember {mutableStateOf("")}
 
 
+
     if(openDialog.value){
 
         Dialog(onDismissRequest = {openDialog.value = false}) {
@@ -134,7 +135,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     OutlinedTextField(
                         value = addTask.value,
                         onValueChange = { addTask.value = it },
-
                         label = { Text(text = "Add Task Name") },
                         placeholder = { Text(text = "Task Name") },
                         singleLine = true,
@@ -143,6 +143,8 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     //button for adding a task
                     Button(
                         onClick = {
+                            //saveCleaningTask(addTask.toString(), "Custom", viewModel, selectedRoomSettings)
+                            saveCleaningTask(addTask.value, " ", viewModel, selectedRoomSettings)
                             openDialog.value = false
                         },
                         modifier = Modifier
