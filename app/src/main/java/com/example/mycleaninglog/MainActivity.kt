@@ -83,6 +83,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     fun signIn() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
