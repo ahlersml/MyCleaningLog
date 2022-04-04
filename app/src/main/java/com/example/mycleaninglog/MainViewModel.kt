@@ -114,7 +114,7 @@ class MainViewModel : ViewModel() {
         }
         preConTask.uniqueID = document.id
         val handle = document.set(preConTask)
-        handle.addOnSuccessListener{Log.d("Firebase", "DocumentSaved")}
+        handle.addOnSuccessListener{Log.d("Firebase", "DocumentSaved ${document.id}")}
         handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
     }
 
