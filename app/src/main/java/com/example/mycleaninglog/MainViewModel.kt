@@ -1,16 +1,11 @@
 package com.example.mycleaninglog
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
-import com.google.android.gms.common.config.GservicesValue.value
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
@@ -20,7 +15,7 @@ class MainViewModel : ViewModel() {
     var selectedRoom : myRoom? = null
     private lateinit var firestore : FirebaseFirestore
     var user : User? = null
-    var users: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
+    var userList: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
 
 
 
@@ -68,15 +63,15 @@ class MainViewModel : ViewModel() {
                 return@addSnapshotListener
             }
             snapshot?.let {
-                val allMyTasks = ArrayList<cleaningTask>()
+                val myTasks = ArrayList<cleaningTask>()
                 val documents = snapshot.documents
                 documents.forEach{
                     var myTask = it.toObject(cleaningTask::class.java)
                     myTask?.let{
-                        allMyTasks.add(it)
+                        myTasks.add(it)
                     }
                 }
-                cleaningTasks.value = allMyTasks
+                cleaningTasks.value = myTasks
             }
 
         }
