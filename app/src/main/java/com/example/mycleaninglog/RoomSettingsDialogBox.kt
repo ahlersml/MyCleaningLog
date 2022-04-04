@@ -41,7 +41,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
     val openDialog = remember { mutableStateOf(true) }
     val nameChange = remember {mutableStateOf("")}
     val addTask = remember {mutableStateOf("")}
-    val userInput = remember { mutableStateOf("")}
+
 
 
     if(openDialog.value){

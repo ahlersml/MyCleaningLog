@@ -24,6 +24,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -120,12 +121,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-}
-
-@ExperimentalMaterialApi
-@Composable
-fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
-    //ExpandableCard(title = "Rooms", myRooms = myRooms, )
-    //ExpandableCard(title = "Common Tasks")
-    //ExpandableCard(title = "Upcoming Tasks")
 }
