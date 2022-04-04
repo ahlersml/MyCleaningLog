@@ -44,41 +44,63 @@ class MainActivity : ComponentActivity() {
                 viewModel.user = user
                 viewModel.listenToMyRooms()
             }
+
             val user by viewModel.users.observeAsState(initial = emptyList())
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
 
             MyCleaningLogTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
-                            .padding(24.dp)
-                    ) {
-                        //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
+                if(user.isNullOrEmpty()) {
+                    signIn()
+                }
+                else{
+                    Surface(color = MaterialTheme.colors.background) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colors.background)
+                                .padding(24.dp)
+                        ) {
+                            //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
 
                             //call a header with title and logo
 
-                        // Login button
-                        Button(
-                            onClick = {
-                                signIn()
+                            // Login button
+                            Button(
+                                onClick = {
+                                    signIn()
+                                }
+                            ) {
+                                Text(
+                                    text = "Login",
+                                    color = Color.White,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
-                        ) {
-                            Text(
-                                text = "Login",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
+
+                            ExpandableCard(
+                                title = "Rooms",
+                                myRooms = myRooms,
+                                viewModel = viewModel,
+                                c = this@MainActivity,
+                                myCleaningTasks = myCleaningTasks
                             )
+                            ExpandableCard(
+                                title = "Common Tasks",
+                                viewModel = viewModel,
+                                c = this@MainActivity,
+                                myCleaningTasks = myCleaningTasks
+                            )
+                            ExpandableCard(
+                                title = "Upcoming Tasks",
+                                viewModel = viewModel,
+                                c = this@MainActivity,
+                                myCleaningTasks = myCleaningTasks
+                            )
+
                         }
-
-                            ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
-                            ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
-                            ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
-
                     }
                 }
             }
@@ -117,8 +139,6 @@ class MainActivity : ComponentActivity() {
 
         } else {
             Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)
-
         }
     }
-
 }
