@@ -46,20 +46,20 @@ fun ExpandableCard(
     myCleaningTasks: List<cleaningTask>,
     viewModel: MainViewModel
     ) {
-    //Used for Expandable card level 1 functionality
+    /** Used for Expandable card level 1 functionality */
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
         targetValue = if (expandedState) 180f else 0f
     )
 
-    //Used for Add Room Button
+    /**Used for Add Room Button */
     var addRoomShowMenu by remember { mutableStateOf(false) }
     //val context = LocalContext.current
     //var selectedMyRoom: myRoom? = null
     //var viewModel = inViewModel
 viewModel.listenToMyRooms()
 
-    //building the card
+    /** building the card */
     val dark = isSystemInDarkTheme()
     val color = if (dark) Gray else Color.LightGray
     Card(
@@ -79,7 +79,7 @@ viewModel.listenToMyRooms()
                 .background(color = color)
                 .padding(12.dp)
         ) {
-            //following code builds the row that the information will sit within
+            /** following code builds the row that the information will sit within */
             Row(verticalAlignment = Alignment.CenterVertically) {
 
                 //creates the up and down arrow icon for if 1st level card has been expanded
@@ -97,7 +97,7 @@ viewModel.listenToMyRooms()
                     )
                 }
 
-                //following code builds the first block of the row (this is the text/title section)
+                /** following code builds the first block of the row (this is the text/title section) */
                 Text(
                     modifier = Modifier
                         .background(color = color)
@@ -108,9 +108,9 @@ viewModel.listenToMyRooms()
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                // If the level 1 card is titled "Rooms", do the following code which builds the second and third portion of the row (the buttons)
+                /** If the level 1 card is titled "Rooms", do the following code which builds the second and third portion of the row (the buttons) */
                 if (title == "Rooms") {
-                    //creates the icon button for adding rooms
+                    /** creates the icon button for adding rooms */
                     IconButton(
                         modifier = Modifier
                             .alpha(ContentAlpha.medium)
@@ -123,12 +123,13 @@ viewModel.listenToMyRooms()
                             contentDescription = "Add Symbol"
                         )
                     }
-                    //creates the dropdown menu when icon is clicked
+                    /** creates the dropdown menu when icon is clicked */
                     DropdownMenu(
                         expanded = addRoomShowMenu,
                         onDismissRequest = { addRoomShowMenu = false }) {
-                        //list of menu items to be displayed
-                        //bedroom
+                        /**list of menu items to be displayed
+                        * bedroom
+                        **/
                         DropdownMenuItem(
                             onClick = {
                                 saveItem("Bedroom", "Bed", viewModel)
@@ -136,7 +137,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Bedroom") }
 
-                        //bathroom
+                        /** bathroom */
                         DropdownMenuItem(
                             onClick = {
                                 saveItem("Bathroom", "Bath", viewModel)
@@ -144,7 +145,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Bathroom") }
 
-                        //kitchen
+                        /** kitchen */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Kitchen")
@@ -153,7 +154,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Kitchen") }
 
-                        //Dining room
+                        /** Dining room */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Dining Room")
@@ -162,7 +163,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Dining Room") }
 
-                        //living room
+                        /** living room */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Living Room")
@@ -171,7 +172,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Living Room") }
 
-                        //outdoors
+                        /** outdoors */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Outdoors")
@@ -180,7 +181,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Outdoors") }
 
-                        //garage
+                        /** garage */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Garage")
@@ -189,7 +190,7 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Garage") }
 
-                        //utility room
+                        /** utility room */
                         DropdownMenuItem(
                             onClick = {
                                 //addRoomList.add("Utility Room")
@@ -198,35 +199,37 @@ viewModel.listenToMyRooms()
                             })
                         { Text(text = "Utility Room") }
 
-                        //other
+                        /** other */
                         DropdownMenuItem(
                             onClick = {
 
-                                //add code here to create a new room that is not in the list
+                                /** add code here to create a new room that is not in the list */
                                 addRoomShowMenu = !addRoomShowMenu
                             })
                         { Text(text = "other") }
                     }
                 }
             }
-            //displays the options for if the card is expanded
+            /** displays the options for if the card is expanded */
             if (expandedState) {
-                //what to do if the 1st level expandable card is labeled "Rooms"
+                /** what to do if the 1st level expandable card is labeled "Rooms" */
                 if (title == "Rooms") {
-                    //passes each item on the addRoomList into expandable card level
+                    /** passes each item on the addRoomList into expandable card level */
                     myRooms.forEach { position -> ExpandableCardLevelTwo(selectedRoom = position, c = c, viewModel = viewModel, myCleaningTasks = myCleaningTasks, myRooms = myRooms )}
                 }
 
-                //what to do if the 1st level expandable card is labeled "Common Tasks"
+                /** what to do if the 1st level expandable card is labeled "Common Tasks" */
                 if (title == "Common Tasks") {
-                    //currently just displays a text line
-                    //following code needs to be replaced with a list of tasks that are shared between multiple rooms
+                    /** currently just displays a text line
+                     * code needs to be replaced with a list of tasks that are shared between multiple rooms
+                     */
                     Text(text = "Here are the common tasks")
                 }
                 //what to do if the 1st level expandable card is labeled "Upcoming tasks"
                 if (title == "Upcoming Tasks") {
-                    //currently just displays a text line
-                    //following code needs to be replaced with a list of tasks in order from most needed to least
+                    /** currently just displays a text line
+                    * following code needs to be replaced with a list of tasks in order from most needed to least
+                     */
                     Text(text = "here are the upcoming tasks")
                 }
 
@@ -241,7 +244,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         myRoomName = roomName
         myRoomID = roomID
     }
-    //creates prebuilt tasks into bedroom
+    /** creates prebuilt tasks into bedroom */
     viewModel.saveRoom(preConRoom)
     if(preConRoom.myRoomName == "Bedroom"){
         saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
@@ -249,7 +252,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Wash Bedding", "WAS", viewModel, preConRoom)
         saveCleaningTask("Laundry", "LAU", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into bathroom
+    /** creates prebuilt tasks into bathroom */
     if(preConRoom.myRoomName == "Bathroom"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -259,7 +262,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Scrub Toilet", "TOI", viewModel, preConRoom)
         saveCleaningTask("Wipe Down Mirror", "MIR", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into kitchen
+    /** creates prebuilt tasks into kitchen */
     if(preConRoom.myRoomName == "Kitchen"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -271,21 +274,21 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Clean Cabinets/Drawers", "CAB", viewModel, preConRoom)
         saveCleaningTask("Wash Kitchen Towels/Rags", "TOW", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into dining room
+    /** creates prebuilt tasks into dining room */
     if(preConRoom.myRoomName == "Dining Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
         saveCleaningTask("Clean Table", "TAB", viewModel, preConRoom)
         saveCleaningTask("Wash Linens", "Lin", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into living room
+    /** creates prebuilt tasks into living room */
     if(preConRoom.myRoomName == "Living Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
         saveCleaningTask("Clean Upholstery", "UPH", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into outdoors
+    /** creates prebuilt tasks into outdoors */
     if(preConRoom.myRoomName == "Outdoors"){
         saveCleaningTask("Mow", "MOW", viewModel, preConRoom)
         saveCleaningTask("Pull Weeds", "WEE", viewModel, preConRoom)
@@ -296,13 +299,13 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         saveCleaningTask("Clean Siding/Brick", "GRI", viewModel, preConRoom)
         saveCleaningTask("Take Out Trash", "GRI", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into garage
+    /** creates prebuilt tasks into garage */
     if(preConRoom.myRoomName == "Garage"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Clean Garage Door", "VAC", viewModel, preConRoom)
         saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
     }
-    //creates prebuilt tasks into utility room
+    /** creates prebuilt tasks into utility room */
     if(preConRoom.myRoomName == "Utility Room"){
         saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
         saveCleaningTask("Replace Furnace Filter", "VAC", viewModel, preConRoom)
@@ -310,7 +313,7 @@ fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
     }
 }
 
-//creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
+/** creates a cleaning task and sends to viewmodel where it saves tasks to a room in database */
 fun saveCleaningTask(taskName: String, taskID: String, viewModel: MainViewModel, preConRoom: myRoom){
     var preConTask = cleaningTask().apply{
         cleaningTaskName = taskName

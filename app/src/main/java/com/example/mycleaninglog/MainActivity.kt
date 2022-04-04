@@ -13,7 +13,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mycleaninglog.dto.myRoom
@@ -43,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 viewModel.user = user
                 viewModel.listenToMyRooms()
             }
-            val user by viewModel.users.observeAsState(initial = emptyList())
+            val user by viewModel.userList.observeAsState(initial = emptyList())
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
 
@@ -60,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
                             //call a header with title and logo
 
-                        // Login button
+                        /** Login button */
                         Button(
                             onClick = {
                                 signIn()
