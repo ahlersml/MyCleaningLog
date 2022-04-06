@@ -1,5 +1,11 @@
 package com.example.mycleaninglog
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -8,14 +14,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
 import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
@@ -74,6 +84,8 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
+                        pushNotification()
+
                             ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
@@ -121,10 +133,71 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@ExperimentalMaterialApi
 @Composable
-fun HomeScreen(myRooms: List<myRoom> = ArrayList<myRoom>()) {
-    //ExpandableCard(title = "Rooms", myRooms = myRooms, )
-    //ExpandableCard(title = "Common Tasks")
-    //ExpandableCard(title = "Upcoming Tasks")
+fun pushNotification(){
+    val context = LocalContext.current
+    val channelId = "MakeitEasy"
+    val notificationId = 0
+    val myBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mycleaninglog)
+
+    LaunchedEffect(Unit) {
+        createNotificationChannel(channelId, context)
+    }
+    Button(
+        onClick = {
+            largeTextWithBigIconNotification(
+                context,
+                channelId,
+                notificationId,
+                "MyCleaningLog",
+                "Welcome to my cleaning log. Glad you are using the application.",
+                myBitmap
+            )
+        }
+    ) {
+        Text(
+            text = "Test Push Notification Here",
+            fontSize = 16.sp,
+            modifier = Modifier.padding(5.dp)
+        )
+    }
+
+}
+
+fun createNotificationChannel(channelId: String, context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val name = "MakeitEasy"
+        val desc = "My Channel MakeitEasy"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelId, name, importance).apply {
+            description = desc
+        }
+        val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+}
+fun largeTextWithBigIconNotification(
+    context: Context,
+    channelId: String,
+    notificationId: Int,
+    textTitle: String,
+    textContent: String,
+    largeIcon: Bitmap,
+    priority: Int = NotificationCompat.PRIORITY_DEFAULT
+) {
+    val builder = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.mycleaninglog)
+        .setContentTitle(textTitle)
+        .setContentText(textContent)
+        .setLargeIcon(largeIcon)
+        .setStyle(
+            NotificationCompat.BigTextStyle()
+                .bigText(
+                    textContent
+                )
+        )
+        .setPriority(priority)
+    with(NotificationManagerCompat.from(context)) {
+        notify(notificationId, builder.build())
+    }
 }
