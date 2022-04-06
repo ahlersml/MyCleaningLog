@@ -143,6 +143,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     //button for adding a task
                     Button(
                         onClick = {
+                            viewModel.saveCleaningTask(taskName = addTask.value, taskID = "NEW", viewModel = viewModel, preConRoom = selectedRoomSettings )
                             openDialog.value = false
                         },
                         modifier = Modifier
