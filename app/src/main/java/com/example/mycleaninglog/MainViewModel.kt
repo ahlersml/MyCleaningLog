@@ -58,28 +58,31 @@ class MainViewModel : ViewModel() {
         }
     }
     internal fun listenToCleaningTasks() {
-        selectedRoom?.let{
-            selectedRoom->
 
-        firestore.collection("myRooms").document(selectedRoom.uniqueID).collection("cleaningTasks").addSnapshotListener{
-                snapshot, e->
-            if(e != null){
-                Log.w("Listen failed", e)
-                return@addSnapshotListener
-            }
-            snapshot?.let {
-                val allMyTasks = ArrayList<cleaningTask>()
-                val documents = snapshot.documents
-                documents.forEach{
-                    var myTask = it.toObject(cleaningTask::class.java)
-                    myTask?.let{
-                        allMyTasks.add(it)
+        user?.let { user ->
+            selectedRoom?.let { selectedRoom ->
+
+                firestore.collection("users").document(user.uid).collection("myRooms")
+                    .document(selectedRoom.uniqueID).collection("cleaningTasks")
+                    .addSnapshotListener { snapshot, e ->
+                        if (e != null) {
+                            Log.w("Listen failed", e)
+                            return@addSnapshotListener
+                        }
+                        snapshot?.let {
+                            val allMyTasks = ArrayList<cleaningTask>()
+                            val documents = snapshot.documents
+                            documents.forEach {
+                                var myTask = it.toObject(cleaningTask::class.java)
+                                myTask?.let {
+                                    allMyTasks.add(it)
+                                }
+                            }
+                            cleaningTasks.value = allMyTasks
+                        }
+
                     }
-                }
-                cleaningTasks.value = allMyTasks
             }
-
-        }
         }
     }
 
@@ -106,16 +109,21 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun saveCleaningTask(preConTask: cleaningTask, selectedRoom: myRoom){
-        val document = if(preConTask.uniqueID == null || preConTask.uniqueID.isEmpty()){
-            firestore.collection("myRooms").document(selectedRoom.uniqueID).collection("cleaningTasks").document()
-        } else {
-            firestore.collection("myRooms").document(selectedRoom.uniqueID).collection("cleaningTasks").document(preConTask.uniqueID)
+    fun saveTask(preConTask: cleaningTask, selectedRoom: myRoom) {
+        user?.let {
+                user ->
+            val document = if (preConTask.uniqueID == null || preConTask.uniqueID.isEmpty()) {
+                firestore.collection("users").document(user.uid).collection("myRooms").document(selectedRoom.uniqueID)
+                    .collection("cleaningTasks").document()
+            } else {
+                firestore.collection("users").document(user.uid).collection("myRooms").document(selectedRoom.uniqueID)
+                    .collection("cleaningTasks").document(preConTask.uniqueID)
+            }
+            preConTask.uniqueID = document.id
+            val handle = document.set(preConTask)
+            handle.addOnSuccessListener { Log.d("Firebase", "DocumentSaved") }
+            handle.addOnFailureListener { Log.e("Firebase", "Save Failed $it") }
         }
-        preConTask.uniqueID = document.id
-        val handle = document.set(preConTask)
-        handle.addOnSuccessListener{Log.d("Firebase", "DocumentSaved")}
-        handle.addOnFailureListener{Log.e("Firebase", "Save Failed $it")}
     }
 
     fun saveUser() {
@@ -208,7 +216,16 @@ class MainViewModel : ViewModel() {
             cleaningTaskName = taskName
             cleaningTaskId = taskID
         }
-        viewModel.saveCleaningTask(preConTask, preConRoom)
+        viewModel.saveTask(preConTask, preConRoom)
+    }
+
+    fun deleteTask(preConRoom: myRoom, preConTask: cleaningTask) {
+        user?.let {
+                user->
+            val document = firestore.collection("users").document(user.uid).collection("myRooms")
+                .document(preConRoom.uniqueID).collection("cleaningTasks").document(preConTask.uniqueID)
+            document.delete()
+        }
     }
 
 }

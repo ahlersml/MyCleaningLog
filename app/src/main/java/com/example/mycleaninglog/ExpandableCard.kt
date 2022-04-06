@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
@@ -40,7 +41,7 @@ fun ExpandableCard(
 
     c: Context,
     title: String,
-    titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
+    titleFontSize: TextUnit = 25.sp,
     titleFontWeight: FontWeight = FontWeight.Bold,
     myRooms: List<myRoom> = ArrayList<myRoom>(),
     myCleaningTasks: List<cleaningTask>,

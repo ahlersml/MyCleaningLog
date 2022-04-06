@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.example.mycleaninglog.dto.cleaningTask
@@ -89,7 +90,7 @@ fun ExpandableCardLevelTwo(
                     .padding(12.dp, 12.dp, 0.dp, 12.dp)
             ) {
                 //following code builds the row that the information will sit within
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
 
                     //creates the up and down arrow icon for if 2nd level card has been expanded
                     IconButton(
@@ -160,7 +161,44 @@ fun ExpandableCardLevelTwo(
                     //currently just displays a text line
                     //needs to be replaced with code to show all tasks and timers
                     //Text(text = "testing")
-                    myCleaningTasks.forEach { position -> Text(text = position.cleaningTaskName) }
+                    myCleaningTasks.forEach { position ->
+                        var selectedTask: cleaningTask = position
+
+                        var taskSettingsPopup by remember { mutableStateOf(false) }
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)){
+
+                            Text(
+                                modifier = Modifier
+                                    .weight(8f),
+                                text = position.cleaningTaskName,
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+
+                            IconButton(
+                                modifier = Modifier
+                                    .alpha(ContentAlpha.medium)
+                                    .background(color = Color.Cyan)
+                                    .weight(1f),
+                                onClick = {
+                                    taskSettingsPopup = !taskSettingsPopup
+                                }
+
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu,
+                                    contentDescription = "Menu Symbol"
+                                )
+                            }
+                            if (taskSettingsPopup) {
+                                //var c = MainActivity()
+                                TaskSettingsDialogBox(c = c, selectedTaskSettings = selectedTask, viewModel = viewModel,
+                                    selectedRoomSettings = selectedRoom)
+                            }
+                        }
+                    }
 
                 }else{
                     expandedState = !expandedState
