@@ -39,8 +39,9 @@ import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-
-
+/**
+ * Contains the layout of the application along with methods for signing in/out and push notifications.
+ */
 class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()

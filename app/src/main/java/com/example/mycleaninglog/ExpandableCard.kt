@@ -33,7 +33,9 @@ import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
 import com.google.firebase.platforminfo.DefaultUserAgentPublisher
 
-
+/**
+ * Creates base card in which information will sit in including the dropdown to add a room.
+ */
 @ExperimentalMaterialApi
 @Composable
 

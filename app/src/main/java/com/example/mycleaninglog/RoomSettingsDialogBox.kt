@@ -34,7 +34,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.mycleaninglog.dto.myRoom
 
-
+/**
+ * Creates a dialog box for users to change a room name, delete a room, or add a task.
+ */
 @ExperimentalMaterialApi
 @Composable
 fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: MainViewModel) {

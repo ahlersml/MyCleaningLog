@@ -14,6 +14,9 @@ import com.google.android.gms.common.config.GservicesValue.value
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
+/**
+ * Class contains methods to allow users to add and delete tasks/rooms and reflect in the firebase.
+ */
 class MainViewModel : ViewModel() {
     var myRooms: MutableLiveData<List<myRoom>> = MutableLiveData<List<myRoom>>()
     var cleaningTasks: MutableLiveData<List<cleaningTask>> = MutableLiveData<List<cleaningTask>>()
@@ -32,6 +35,9 @@ class MainViewModel : ViewModel() {
 
     }
 
+    /**
+     * Gathers room information from the firebase.
+     */
     fun listenToMyRooms() {
         user?.let {
             user ->
@@ -57,6 +63,10 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    /**
+     * Gathers cleaning task infromation from the firebase
+     */
     internal fun listenToCleaningTasks() {
 
         user?.let { user ->
@@ -86,6 +96,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a room to the firebase.
+     */
     fun saveRoom(preConRoom: myRoom) {
         user?.let{
             user ->
@@ -101,6 +114,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Deletes a room from the firebase.
+     */
     fun deleteRoom(preConRoom: myRoom) {
         user?.let {
             user->
@@ -109,6 +125,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a room to the firebase.
+     */
     fun saveTask(preConTask: cleaningTask, selectedRoom: myRoom) {
         user?.let {
                 user ->
@@ -126,6 +145,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a user to the firebase.
+     */
     fun saveUser() {
         user?.let {
             user->
@@ -136,6 +158,9 @@ class MainViewModel : ViewModel() {
 
     }
 
+    /**
+     * Creates and saves a room to the firebase and loads them with prebuilt tasks.
+     */
     fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         var preConRoom = myRoom().apply{
             myRoomName = roomName
@@ -202,7 +227,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    //creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
+    /**
+     * Creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
+     */
     fun saveCleaningTask(taskName: String, taskID: String, viewModel: MainViewModel, preConRoom: myRoom){
         var preConTask = cleaningTask().apply{
             cleaningTaskName = taskName
@@ -211,6 +238,9 @@ class MainViewModel : ViewModel() {
         viewModel.saveTask(preConTask, preConRoom)
     }
 
+    /**
+     * Deletes task from the firebase.
+     */
     fun deleteTask(preConRoom: myRoom, preConTask: cleaningTask) {
         user?.let {
                 user->

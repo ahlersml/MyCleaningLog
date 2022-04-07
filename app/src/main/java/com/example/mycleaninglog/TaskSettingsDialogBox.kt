@@ -36,7 +36,9 @@ import androidx.compose.ui.window.Dialog
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 
-
+/**
+ * Creates a dialog box to edit task settings such as renaming or deleting a task.
+ */
 @ExperimentalMaterialApi
 @Composable
 fun TaskSettingsDialogBox(c: Context, selectedTaskSettings: cleaningTask, viewModel: MainViewModel, selectedRoomSettings: myRoom) {

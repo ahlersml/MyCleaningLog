@@ -41,10 +41,12 @@ import androidx.fragment.app.FragmentManager
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 
+/**
+ * Creates secondary card for room information including tasks and settings.
+ */
 @ExperimentalMaterialApi
 @Composable
 fun ExpandableCardLevelTwo(
-    //expandable card 2 variables
     c: Context,
     selectedRoom: myRoom,
     viewModel: MainViewModel,
@@ -52,27 +54,16 @@ fun ExpandableCardLevelTwo(
     myRooms: List<myRoom>
     ) {
 
-    // used for expandable card level 2 functionality
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
         targetValue = if (expandedState) 180f else 0f
     )
 
-
-
-    //viewModel.selectedRoom = selectedRoom
-    //viewModel.listenToCleaningTasks()
-
-
-
-    //used for drop down menu
     var dropDownMenu by remember { mutableStateOf(false) }
 
-    //used for settings menu
     var roomSettingsPopup by remember { mutableStateOf(false) }
 
 
-        //building the card
         Card(
             modifier = Modifier
                 .fillMaxWidth()
