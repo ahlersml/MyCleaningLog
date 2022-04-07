@@ -42,7 +42,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()
-
+    var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,11 +85,12 @@ class MainActivity : ComponentActivity() {
                         }
 
                         pushNotification()
+                        if(firebaseUser != null) {
 
                             ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
-
+                        }
                     }
                 }
             }
@@ -107,7 +108,7 @@ class MainActivity : ComponentActivity() {
         signInLauncher.launch(signinIntent)
     }
 
-    var firebaseUser: FirebaseUser? = null
+
 
     private val signInLauncher = registerForActivityResult (
         FirebaseAuthUIActivityResultContract()
@@ -123,6 +124,9 @@ class MainActivity : ComponentActivity() {
                 val user = User(it.uid, it.displayName)
                 viewModel.user = user
                 viewModel.saveUser()
+                val intent = intent
+                finish()
+                startActivity(intent)
             }
 
         } else {
