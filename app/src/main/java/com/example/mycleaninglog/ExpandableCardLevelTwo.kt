@@ -82,24 +82,20 @@ fun ExpandableCardLevelTwo(
                         easing = LinearOutSlowInEasing
                     )
                 ),
-            //onClick = { selectedRoom.expanded = true }
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp, 12.dp, 0.dp, 12.dp)
             ) {
-                //following code builds the row that the information will sit within
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
 
-                    //creates the up and down arrow icon for if 2nd level card has been expanded
                     IconButton(
                         modifier = Modifier
                             .alpha(ContentAlpha.medium)
                             .weight(1f)
                             .rotate(rotationState),
                         onClick = {
-                            //expands or closes the room that is clicked but also closes all rooms other than that room
                             if(!selectedRoom.expanded) {
                                 myRooms.forEach { position -> position.expanded = false }
                                 myRooms.forEach { position -> viewModel.saveRoom(position) }
@@ -119,7 +115,6 @@ fun ExpandableCardLevelTwo(
                         )
                     }
 
-                    //following code builds the first block of the row (this is the text/title section)
                     Text(
                         modifier = Modifier
                             .weight(6f),
@@ -145,22 +140,16 @@ fun ExpandableCardLevelTwo(
                             contentDescription = "Menu Symbol"
                         )
                     }
-                    //creates the room settings popup dialog
                     if (roomSettingsPopup) {
-                        //var c = MainActivity()
                         RoomSettingsDialogBox(c = c, selectedRoomSettings = selectedRoom, viewModel = viewModel)
                     }
 
                 }
-                //what happens if the card is expanded
                 if (selectedRoom.expanded){
                 if (expandedState) {
                     viewModel.selectedRoom = selectedRoom
                     viewModel.listenToCleaningTasks()
 
-                    //currently just displays a text line
-                    //needs to be replaced with code to show all tasks and timers
-                    //Text(text = "testing")
                     myCleaningTasks.forEach { position ->
                         var selectedTask: cleaningTask = position
 
@@ -193,7 +182,6 @@ fun ExpandableCardLevelTwo(
                                 )
                             }
                             if (taskSettingsPopup) {
-                                //var c = MainActivity()
                                 TaskSettingsDialogBox(c = c, selectedTaskSettings = selectedTask, viewModel = viewModel,
                                     selectedRoomSettings = selectedRoom)
                             }

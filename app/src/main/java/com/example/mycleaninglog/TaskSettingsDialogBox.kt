@@ -63,7 +63,6 @@ fun TaskSettingsDialogBox(c: Context, selectedTaskSettings: cleaningTask, viewMo
                     Spacer(modifier = Modifier.padding(5.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        //Header to dialog box
                         Text(
                             modifier = Modifier
                                 .weight(6f)
@@ -73,14 +72,12 @@ fun TaskSettingsDialogBox(c: Context, selectedTaskSettings: cleaningTask, viewMo
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp
                         )
-                        //cancel button to dialog box
                         IconButton(
                             onClick = {
                                 openDialog.value = false
                             },
                             modifier = Modifier
                                 .weight(1.5f)
-                                //.height(60.dp)
                                 .padding(10.dp)
                                 .background(color = Color.Red, shape = RoundedCornerShape(5.dp))
 
@@ -106,7 +103,6 @@ fun TaskSettingsDialogBox(c: Context, selectedTaskSettings: cleaningTask, viewMo
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
-                    //submit button for changing room name
                     Button(
                         onClick = {
 

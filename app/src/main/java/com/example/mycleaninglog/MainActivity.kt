@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
 
             MyCleaningLogTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Column(
                         modifier = Modifier
