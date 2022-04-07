@@ -34,6 +34,8 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -43,17 +45,21 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()
     var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    private lateinit var auth: FirebaseAuth
+
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+        // [END initialize_auth]
         setContent {
             firebaseUser?.let {
                 val user = User(it.uid, "")
                 viewModel.user = user
                 viewModel.listenToMyRooms()
             }
-            val user by viewModel.users.observeAsState(initial = emptyList())
+
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
 
@@ -66,36 +72,51 @@ class MainActivity : ComponentActivity() {
                             .background(MaterialTheme.colors.background)
                             .padding(24.dp)
                     ) {
-                        //calls the 1st level expandable cards. hardcoded because they should never change. These make up the main menu
 
-                            //call a header with title and logo
-
-                        // Login button
-                        Button(
-                            onClick = {
-                                signIn()
-                            }
-                        ) {
-                            Text(
-                                text = "Login",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-
-                        pushNotification()
+                        logIn()
                         if(firebaseUser != null) {
-
+                            pushNotification()
                             ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            logOut()
                         }
                     }
                 }
             }
         }
     }
+    @Composable
+    fun logIn(){
+        Button(
+            onClick = {
+                signIn()
+            }
+        ) {
+            Text(
+                text = "Login",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+    @Composable
+    fun logOut(){
+        Button(
+            onClick = {
+                signOut()
+            }
+        ) {
+            Text(
+                text = "Logout",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+
     fun signIn() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
@@ -107,8 +128,6 @@ class MainActivity : ComponentActivity() {
 
         signInLauncher.launch(signinIntent)
     }
-
-
 
     private val signInLauncher = registerForActivityResult (
         FirebaseAuthUIActivityResultContract()
@@ -133,6 +152,13 @@ class MainActivity : ComponentActivity() {
             Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)
 
         }
+    }
+
+    private fun signOut() {
+        auth.signOut()
+        val intent = intent
+        finish()
+        startActivity(intent)
     }
 
 }
