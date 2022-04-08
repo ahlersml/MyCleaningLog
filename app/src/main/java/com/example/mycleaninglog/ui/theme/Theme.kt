@@ -1,6 +1,5 @@
 package com.example.mycleaninglog.ui.theme
 
-import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors

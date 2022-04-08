@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -29,14 +28,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
-import com.example.mycleaninglog.ui.theme.Gray
 import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
 import com.example.mycleaninglog.ui.theme.RegularBlue
 import com.firebase.ui.auth.AuthUI
@@ -89,10 +85,10 @@ class MainActivity : ComponentActivity() {
                             .padding(24.dp)
                     ) {
                         Box(
-                           modifier = Modifier
-                               .width(1000.dp)
-                               .background(RegularBlue)
-                               .height(60.dp)
+                            modifier = Modifier
+                                .width(1000.dp)
+                                .background(RegularBlue)
+                                .height(60.dp)
                         ){
                             val image: Painter = painterResource(id = R.drawable.mycleaninglog)
                             Image(
@@ -105,7 +101,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.align(Alignment.Center),
                                 fontFamily = montFont,
                                 color = color,
-                                )
+                            )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         logIn()
