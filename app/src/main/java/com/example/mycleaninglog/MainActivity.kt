@@ -10,25 +10,31 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
 import com.example.mycleaninglog.ui.theme.MyCleaningLogTheme
+import com.example.mycleaninglog.ui.theme.RegularBlue
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -39,8 +45,9 @@ import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-
-
+/**
+ * Contains the layout of the application along with methods for signing in/out and push notifications.
+ */
 class MainActivity : ComponentActivity() {
 
     private val viewModel : MainViewModel by viewModel<MainViewModel>()
@@ -62,9 +69,14 @@ class MainActivity : ComponentActivity() {
 
             val myRooms by viewModel.myRooms.observeAsState(initial = emptyList())
             val myCleaningTasks by viewModel.cleaningTasks.observeAsState(initial = emptyList())
+            val montFont = FontFamily(
+                Font(R.font.mont, FontWeight.Normal)
+            )
+            val dark = isSystemInDarkTheme()
+            val color = if (dark) Color.White else Color.Black
+
 
             MyCleaningLogTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Column(
                         modifier = Modifier
@@ -72,13 +84,37 @@ class MainActivity : ComponentActivity() {
                             .background(MaterialTheme.colors.background)
                             .padding(24.dp)
                     ) {
-
+                        Box(
+                            modifier = Modifier
+                                .width(1000.dp)
+                                .background(RegularBlue)
+                                .height(60.dp)
+                        ){
+                            val image: Painter = painterResource(id = R.drawable.mycleaninglog)
+                            Image(
+                                painter = image,
+                                contentDescription = "",
+                                modifier = Modifier.align(Alignment.CenterStart) )
+                            Text(
+                                text = "MyCleaningLog",
+                                fontSize = 25.sp,
+                                modifier = Modifier.align(Alignment.Center),
+                                fontFamily = montFont,
+                                color = color,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
                         logIn()
+                        Spacer(modifier = Modifier.height(2.dp))
                         if(firebaseUser != null) {
                             pushNotification()
+                            Spacer(modifier = Modifier.height(7.dp))
                             ExpandableCard(title = "Rooms", myRooms = myRooms, viewModel = viewModel,c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            Spacer(modifier = Modifier.height(2.dp))
                             ExpandableCard(title = "Common Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            Spacer(modifier = Modifier.height(2.dp))
                             ExpandableCard(title = "Upcoming Tasks", viewModel = viewModel, c = this@MainActivity, myCleaningTasks = myCleaningTasks)
+                            Spacer(modifier = Modifier.height(7.dp))
                             logOut()
                         }
                     }
@@ -86,8 +122,18 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    /**
+     * Allows users to sign in through a log in button
+      */
     @Composable
     fun logIn(){
+        val louisFont = FontFamily(
+            Font(R.font.louis, FontWeight.Normal)
+        )
+        val dark = isSystemInDarkTheme()
+        val color = if (dark) Color.White else Color.Black
+
         Button(
             onClick = {
                 signIn()
@@ -95,14 +141,24 @@ class MainActivity : ComponentActivity() {
         ) {
             Text(
                 text = "Login",
-                color = Color.White,
+                fontFamily = louisFont,
+                color = color,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
     }
+    /**
+     * Allows users to sign out through a log out button
+     */
     @Composable
     fun logOut(){
+        val louisFont = FontFamily(
+            Font(R.font.louis, FontWeight.Normal)
+        )
+        val dark = isSystemInDarkTheme()
+        val color = if (dark) Color.White else Color.Black
+
         Button(
             onClick = {
                 signOut()
@@ -110,13 +166,17 @@ class MainActivity : ComponentActivity() {
         ) {
             Text(
                 text = "Logout",
-                color = Color.White,
+                fontFamily = louisFont,
+                color = color,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
     }
 
+    /**
+     * Creates user in firebase for future reference
+     */
     fun signIn() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
@@ -163,12 +223,20 @@ class MainActivity : ComponentActivity() {
 
 }
 
+/**
+ * Creates push notifications
+ */
 @Composable
 fun pushNotification(){
     val context = LocalContext.current
     val channelId = "MakeitEasy"
     val notificationId = 0
     val myBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mycleaninglog)
+    val louisFont = FontFamily(
+        Font(R.font.louis, FontWeight.Normal)
+    )
+    val dark = isSystemInDarkTheme()
+    val color = if (dark) Color.White else Color.Black
 
     LaunchedEffect(Unit) {
         createNotificationChannel(channelId, context)
@@ -187,6 +255,8 @@ fun pushNotification(){
     ) {
         Text(
             text = "Test Push Notification Here",
+            color = color,
+            fontFamily = louisFont,
             fontSize = 16.sp,
             modifier = Modifier.padding(5.dp)
         )

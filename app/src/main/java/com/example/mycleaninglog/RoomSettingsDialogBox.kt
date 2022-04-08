@@ -1,17 +1,11 @@
 package com.example.mycleaninglog
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,22 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
-
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Menu
-
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.mycleaninglog.dto.myRoom
 
-
+/**
+ * Creates a dialog box for users to change a room name, delete a room, or add a task.
+ */
 @ExperimentalMaterialApi
 @Composable
 fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: MainViewModel) {
@@ -62,7 +52,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                     Spacer(modifier = Modifier.padding(5.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        //Header to dialog box
                         Text(
                             modifier = Modifier
                                 .weight(6f)
@@ -72,7 +61,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp
                         )
-                        //cancel button to dialog box
                         IconButton(
                             onClick = {
                                 openDialog.value = false
@@ -96,7 +84,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
-                    //text box for changing room name
                     OutlinedTextField(
                         value = nameChange.value,
                         onValueChange = { nameChange.value = it },
@@ -105,7 +92,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
-                    //submit button for changing room name
                     Button(
                         onClick = {
                             selectedRoomSettings.myRoomName = nameChange.value
@@ -130,7 +116,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
-                    //text field for adding a task
                     OutlinedTextField(
                         value = addTask.value,
                         onValueChange = { addTask.value = it },
@@ -140,7 +125,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
-                    //button for adding a task
                     Button(
                         onClick = {
                             viewModel.saveCleaningTask(taskName = addTask.value, taskID = "NEW", viewModel = viewModel, preConRoom = selectedRoomSettings )
@@ -163,7 +147,6 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(15.dp))
 
-                    //button to delete the room
                     Button(
                         onClick = {
 
