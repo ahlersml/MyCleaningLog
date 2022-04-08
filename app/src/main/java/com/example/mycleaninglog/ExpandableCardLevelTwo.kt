@@ -29,6 +29,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,6 +42,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
+import com.example.mycleaninglog.ui.theme.RegularBlue
 
 /**
  * Creates secondary card for room information including tasks and settings.
@@ -62,6 +65,13 @@ fun ExpandableCardLevelTwo(
     var dropDownMenu by remember { mutableStateOf(false) }
 
     var roomSettingsPopup by remember { mutableStateOf(false) }
+
+    val montFont = FontFamily(
+        Font(R.font.mont, FontWeight.Normal)
+    )
+    val louisFont = FontFamily(
+        Font(R.font.louis, FontWeight.Normal)
+    )
 
 
         Card(
@@ -110,6 +120,7 @@ fun ExpandableCardLevelTwo(
                         modifier = Modifier
                             .weight(6f),
                         text = selectedRoom.myRoomName,
+                        fontFamily = montFont,
                         fontSize = MaterialTheme.typography.h6.fontSize,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -119,7 +130,7 @@ fun ExpandableCardLevelTwo(
                     IconButton(
                         modifier = Modifier
                             .alpha(ContentAlpha.medium)
-                            .background(color = Color.Cyan)
+                            .background(color = RegularBlue)
                             .weight(1f),
                         onClick = {
                             roomSettingsPopup = !roomSettingsPopup
@@ -151,6 +162,7 @@ fun ExpandableCardLevelTwo(
                                 modifier = Modifier
                                     .weight(8f),
                                 text = position.cleaningTaskName,
+                                fontFamily = louisFont,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 1,

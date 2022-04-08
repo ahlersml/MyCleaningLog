@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.ui.theme.Gray
+import com.example.mycleaninglog.ui.theme.RegularBlue
 import com.google.firebase.platforminfo.DefaultUserAgentPublisher
 
 /**
@@ -56,6 +59,12 @@ fun ExpandableCard(
 
     var addRoomShowMenu by remember { mutableStateOf(false) }
 viewModel.listenToMyRooms()
+    val montFont = FontFamily(
+        Font(R.font.mont, FontWeight.Normal)
+    )
+    val louisFont = FontFamily(
+        Font(R.font.louis, FontWeight.Normal)
+    )
 
     val dark = isSystemInDarkTheme()
     val color = if (dark) Gray else Color.LightGray
@@ -96,6 +105,7 @@ viewModel.listenToMyRooms()
                         .background(color = color)
                         .weight(6f),
                     text = title,
+                    fontFamily = montFont,
                     fontSize = titleFontSize,
                     fontWeight = titleFontWeight,
                     maxLines = 1,
@@ -105,7 +115,7 @@ viewModel.listenToMyRooms()
                     IconButton(
                         modifier = Modifier
                             .alpha(ContentAlpha.medium)
-                            .background(color = Color.Green)
+                            .background(color = RegularBlue)
                             .weight(1f),
                         onClick = { addRoomShowMenu = !addRoomShowMenu }
                     ) {
@@ -122,63 +132,63 @@ viewModel.listenToMyRooms()
                                 viewModel.saveItem("Bedroom", "Bed", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bedroom") }
+                        { Text(text = "Bedroom", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Bathroom", "Bath", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Bathroom") }
+                        { Text(text = "Bathroom", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Kitchen", "Kit", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Kitchen") }
+                        { Text(text = "Kitchen", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Dining Room", "Din", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Dining Room") }
+                        { Text(text = "Dining Room", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Living Room", "Liv", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Living Room") }
+                        { Text(text = "Living Room", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Outdoors", "Out", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Outdoors") }
+                        { Text(text = "Outdoors", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Garage", "Gar", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Garage") }
+                        { Text(text = "Garage", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
                                 viewModel.saveItem("Utility Room", "Util", viewModel)
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "Utility Room") }
+                        { Text(text = "Utility Room", fontFamily = louisFont) }
 
                         DropdownMenuItem(
                             onClick = {
 
                                 addRoomShowMenu = !addRoomShowMenu
                             })
-                        { Text(text = "other") }
+                        { Text(text = "other", fontFamily = louisFont) }
                     }
                 }
             }
