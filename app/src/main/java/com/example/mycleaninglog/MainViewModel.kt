@@ -1,19 +1,17 @@
 package com.example.mycleaninglog
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 import com.example.mycleaninglog.dto.User
-import com.google.android.gms.common.config.GservicesValue.value
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
+/**
+ * Class contains methods to allow users to add and delete tasks/rooms and reflect in the firebase.
+ */
 class MainViewModel : ViewModel() {
     var myRooms: MutableLiveData<List<myRoom>> = MutableLiveData<List<myRoom>>()
     var cleaningTasks: MutableLiveData<List<cleaningTask>> = MutableLiveData<List<cleaningTask>>()
@@ -32,6 +30,9 @@ class MainViewModel : ViewModel() {
 
     }
 
+    /**
+     * Gathers room information from the firebase.
+     */
     fun listenToMyRooms() {
         user?.let {
             user ->
@@ -57,6 +58,10 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    /**
+     * Gathers cleaning task infromation from the firebase
+     */
     internal fun listenToCleaningTasks() {
 
         user?.let { user ->
@@ -86,6 +91,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a room to the firebase.
+     */
     fun saveRoom(preConRoom: myRoom) {
         user?.let{
             user ->
@@ -101,6 +109,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Deletes a room from the firebase.
+     */
     fun deleteRoom(preConRoom: myRoom) {
         user?.let {
             user->
@@ -109,6 +120,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a room to the firebase.
+     */
     fun saveTask(preConTask: cleaningTask, selectedRoom: myRoom) {
         user?.let {
                 user ->
@@ -126,6 +140,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Creates and saves a user to the firebase.
+     */
     fun saveUser() {
         user?.let {
             user->
@@ -136,12 +153,14 @@ class MainViewModel : ViewModel() {
 
     }
 
+    /**
+     * Creates and saves a room to the firebase and loads them with prebuilt tasks.
+     */
     fun saveItem(roomName: String, roomID: String,viewModel: MainViewModel ){
         var preConRoom = myRoom().apply{
             myRoomName = roomName
             myRoomID = roomID
         }
-        //creates prebuilt tasks into bedroom
         viewModel.saveRoom(preConRoom)
         if(preConRoom.myRoomName == "Bedroom"){
             saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
@@ -149,7 +168,6 @@ class MainViewModel : ViewModel() {
             saveCleaningTask("Wash Bedding", "WAS", viewModel, preConRoom)
             saveCleaningTask("Laundry", "LAU", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into bathroom
         if(preConRoom.myRoomName == "Bathroom"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -159,7 +177,6 @@ class MainViewModel : ViewModel() {
             saveCleaningTask("Scrub Toilet", "TOI", viewModel, preConRoom)
             saveCleaningTask("Wipe Down Mirror", "MIR", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into kitchen
         if(preConRoom.myRoomName == "Kitchen"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
@@ -171,21 +188,18 @@ class MainViewModel : ViewModel() {
             saveCleaningTask("Clean Cabinets/Drawers", "CAB", viewModel, preConRoom)
             saveCleaningTask("Wash Kitchen Towels/Rags", "TOW", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into dining room
         if(preConRoom.myRoomName == "Dining Room"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
             saveCleaningTask("Clean Table", "TAB", viewModel, preConRoom)
             saveCleaningTask("Wash Linens", "Lin", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into living room
         if(preConRoom.myRoomName == "Living Room"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Vacuum", "VAC", viewModel, preConRoom)
             saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
             saveCleaningTask("Clean Upholstery", "UPH", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into outdoors
         if(preConRoom.myRoomName == "Outdoors"){
             saveCleaningTask("Mow", "MOW", viewModel, preConRoom)
             saveCleaningTask("Pull Weeds", "WEE", viewModel, preConRoom)
@@ -196,13 +210,11 @@ class MainViewModel : ViewModel() {
             saveCleaningTask("Clean Siding/Brick", "GRI", viewModel, preConRoom)
             saveCleaningTask("Take Out Trash", "GRI", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into garage
         if(preConRoom.myRoomName == "Garage"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Clean Garage Door", "VAC", viewModel, preConRoom)
             saveCleaningTask("Scrub Floors", "FLO", viewModel, preConRoom)
         }
-        //creates prebuilt tasks into utility room
         if(preConRoom.myRoomName == "Utility Room"){
             saveCleaningTask("Dusting", "DUS", viewModel, preConRoom)
             saveCleaningTask("Replace Furnace Filter", "VAC", viewModel, preConRoom)
@@ -210,7 +222,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    //creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
+    /**
+     * Creates a cleaning task and sends to viewmodel where it saves tasks to a room in database
+     */
     fun saveCleaningTask(taskName: String, taskID: String, viewModel: MainViewModel, preConRoom: myRoom){
         var preConTask = cleaningTask().apply{
             cleaningTaskName = taskName
@@ -219,6 +233,9 @@ class MainViewModel : ViewModel() {
         viewModel.saveTask(preConTask, preConRoom)
     }
 
+    /**
+     * Deletes task from the firebase.
+     */
     fun deleteTask(preConRoom: myRoom, preConTask: cleaningTask) {
         user?.let {
                 user->

@@ -1,6 +1,5 @@
 package com.example.mycleaninglog.ui.theme
 
-import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -15,7 +14,7 @@ private val DarkColorPalette = darkColors(
     onSecondary = Color.White,
     background = DarkGray,
     onBackground = Color.White,
-    surface = DarkBlue,
+    surface = Gray,
     onSurface = Color.White,
 )
 
@@ -26,7 +25,7 @@ private val LightColorPalette = lightColors(
     onSecondary = Color.Black,
     background = OffWhite,
     onBackground = Color.Black,
-    surface =  DarkBlue,
+    surface =  Color.LightGray,
     onSurface = Color.Black,
 
     /* Other default colors to override
