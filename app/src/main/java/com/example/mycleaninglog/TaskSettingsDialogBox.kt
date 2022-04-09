@@ -1,5 +1,6 @@
 package com.example.mycleaninglog
 
+
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -32,15 +33,15 @@ import androidx.compose.material.icons.filled.Menu
 
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.mycleaninglog.dto.cleaningTask
 import com.example.mycleaninglog.dto.myRoom
 
 
 @ExperimentalMaterialApi
 @Composable
-fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: MainViewModel) {
+fun TaskSettingsDialogBox(c: Context, selectedTaskSettings: cleaningTask, viewModel: MainViewModel, selectedRoomSettings: myRoom) {
     val openDialog = remember { mutableStateOf(true) }
-    val nameChange = remember {mutableStateOf("")}
-    val addTask = remember {mutableStateOf("")}
+    val timerChange = remember {mutableStateOf("")}
 
 
     if(openDialog.value){
@@ -67,7 +68,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                             modifier = Modifier
                                 .weight(6f)
                                 .padding(10.dp),
-                            text = "Room Settings",
+                            text = "Task Settings",
                             color = Color.Black,
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp
@@ -98,18 +99,16 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     //text box for changing room name
                     OutlinedTextField(
-                        value = nameChange.value,
-                        onValueChange = { nameChange.value = it },
-                        label = { Text(text = "Change Room Name") },
-                        placeholder = { Text(text = selectedRoomSettings.myRoomName) },
+                        value = timerChange.value,
+                        onValueChange = { timerChange.value = it },
+                        label = { Text(text = "Change Reset Timer") },
+                        placeholder = { Text(text = "Change Reset Timer") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(0.8f)
                     )
                     //submit button for changing room name
                     Button(
                         onClick = {
-                            selectedRoomSettings.myRoomName = nameChange.value
-                            viewModel.saveRoom(selectedRoomSettings)
 
                             openDialog.value = false
                         },
@@ -121,7 +120,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.green))
                     ) {
                         Text(
-                            text = "Change Name",
+                            text = "Change Reset Timer",
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -130,44 +129,11 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
-                    //text field for adding a task
-                    OutlinedTextField(
-                        value = addTask.value,
-                        onValueChange = { addTask.value = it },
 
-                        label = { Text(text = "Add Task Name") },
-                        placeholder = { Text(text = "Task Name") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(0.8f)
-                    )
-                    //button for adding a task
-                    Button(
-                        onClick = {
-                            viewModel.saveCleaningTask(taskName = addTask.value, taskID = "NEW", viewModel = viewModel, preConRoom = selectedRoomSettings )
-                            openDialog.value = false
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .height(60.dp)
-                            .padding(10.dp),
-                        shape = RoundedCornerShape(15.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.green))
-                    ) {
-                        Text(
-                            text = "Add Task",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.padding(15.dp))
-
-                    //button to delete the room
                     Button(
                         onClick = {
 
-                            viewModel.deleteRoom(selectedRoomSettings)
+                            viewModel.deleteTask(selectedRoomSettings, selectedTaskSettings)
 
                             openDialog.value = false
                         },
@@ -179,7 +145,7 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
                         colors = ButtonDefaults.buttonColors(Color.Red)
                     ) {
                         Text(
-                            text = "Delete Room",
+                            text = "Delete Task",
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -196,4 +162,3 @@ fun RoomSettingsDialogBox(c: Context, selectedRoomSettings: myRoom, viewModel: M
 
 
 }
-
