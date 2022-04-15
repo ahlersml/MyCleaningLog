@@ -13,6 +13,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -26,15 +27,15 @@ class CleaningTests {
     lateinit var mvm:MainViewModel
     lateinit var cleaningService: CleaningService
     lateinit var roomService : RoomService
-    var allMyTasks : List<cleaningTask>? = ArrayList<cleaningTask>()
-    var allMyRooms : List<myRoom>? = ArrayList<myRoom>()
+    var allMyTasks = ArrayList<cleaningTask>()
+    var allMyRooms = ArrayList<myRoom>()
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    //private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
-    @MockK
-    lateinit var mockCleaningService: CleaningService
+   // @MockK
+   // lateinit var mockCleaningService: CleaningService
 
-    @Before
+   /*@Before
     fun populateTasks() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockKAnnotations.init(this)
@@ -47,44 +48,54 @@ class CleaningTests {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
     }
-
+*/
     @Test
-    fun `given rooms are available when i add a room it should appear in the list`() = runTest{
-        givenRoomServiceIsInitialized()
-        whenRoomDataIsReadAndParsed()
+    fun `when i add a room it should appear in the list`() = runTest{
+        whenIAddRoom()
         thenRoomsAreAvailable()
     }
 
-    private fun givenRoomServiceIsInitialized(){
-        roomService = RoomService()
+    private fun whenIAddRoom(){
+        allMyRooms.add(myRoom("Bed Room"))
+        allMyRooms.add(myRoom("Kitchen"))
     }
 
-    private suspend fun whenRoomDataIsReadAndParsed(){
-        allMyRooms = roomService.fetchRooms()
-    }
-
-    private fun thenRoomsAreAvailable(){
+    private fun thenRoomsAreAvailable() {
         assertNotNull(allMyRooms)
-        assertTrue(allMyRooms!!.isNotEmpty())
+        var containsBedroom = false
+        allMyRooms?.let{
+            it.forEach{
+                if(it.myRoomName.equals("Bed Room")){
+                    containsBedroom = true
+                }
+            }
+            assertTrue(containsBedroom)
+        }
     }
 
     @Test
-    fun `given tasks are available when i add a task it should appear in the list`() = runTest{
-        givenCleaningServiceIsInitialized()
-        whenTaskDataIsReadAndParsed()
-        thenTasksAreAvailable()
+    fun `given tasks are available when i add a task it should appear in the list`() = runTest(){
+
+        whenIAddCleaningTask()
+        thenCleaningTaskAreAvailable()
     }
 
-    private fun givenCleaningServiceIsInitialized(){
-        cleaningService = CleaningService()
+    private fun whenIAddCleaningTask() {
+        allMyTasks.add(cleaningTask("Vacuum Floor"))
+        allMyTasks.add(cleaningTask("Dust Room"))
     }
 
-    private suspend fun whenTaskDataIsReadAndParsed(){
-        allMyTasks = cleaningService.fetchTasks()
-    }
-
-    private fun thenTasksAreAvailable(){
+    private fun thenCleaningTaskAreAvailable() {
         assertNotNull(allMyTasks)
-        assertTrue(allMyTasks!!.isNotEmpty())
+        var containsDustRoom = false
+        allMyTasks?.let{
+            it.forEach{
+                if(it.cleaningTaskName.equals("Dust Room")){
+                    containsDustRoom = true
+                }
+            }
+            assertTrue(containsDustRoom)
+        }
     }
+
 }
